@@ -15,7 +15,7 @@ app.use(cors())
 
 app.post('/signup', signup.signup)
 app.post('/signin', signin.signin)
-app.get('/search/:Id',auth.auth,search.search)
+app.get('/search',search.search)
 app.get('/backend', collectData)
 
 
