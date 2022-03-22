@@ -12,7 +12,8 @@ class hotel {
                     name: { $first: '$name' },
                     reviewsnum: { $first: '$reviewsnum' },
                     price: { $first: '$price' },
-                    images: { $first: '$images' }
+                    images: { $first: '$images' },
+                    starnum: { $first: '$starnum'}
                 }
             }, {
                 $sort: {
@@ -27,7 +28,8 @@ class hotel {
                     city: 1,
                     reviewsnum: 1,
                     price: 1,
-                    images: 1
+                    images: 1,
+                    starnum: 1
                 }
             }])
         } catch {
