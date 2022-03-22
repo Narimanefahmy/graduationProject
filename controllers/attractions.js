@@ -11,7 +11,9 @@ class attraction {
                     city: { $first: '$city' },
                     name: { $first: '$name' },
                     reviewsnum: { $first: '$reviewsnum' },
-                    images: { $first: '$images' }
+                    images: { $first: '$images' },
+                    typeofattraction: { $first: '$typeofattraction'},
+                    rate: {  $first: '$rate' }
                 }
             }, {
                 $sort: {
@@ -25,7 +27,9 @@ class attraction {
                     name: 1,
                     city: 1,
                     reviewsnum: 1,
-                    images: 1
+                    images: 1,
+                    typeofattraction: 1,
+                    rate: 1
                 }
             }])
         } catch {
