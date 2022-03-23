@@ -6,20 +6,29 @@ import {Link} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+
 class MainBanner extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-        startDate:new Date(),
+        startDate: new Date(),
+          
     };
   }
 
   changeDatepickerHandeller=(date)=>{
         this.setState({ startDate: date });
-  }
+    }
 
-  render() {
+
+  
+    
+       
+
+    render() {
+       
+  
 
       const mainBannerOptions = {
           items: 1,
@@ -53,7 +62,8 @@ class MainBanner extends Component {
           }
       };
 
-      const startDate =this.state.startDate;
+        //const startDate = this.state.startDate;
+       
     return (
         <>
             {/* ===============  Main banner area start =============== */}
@@ -100,11 +110,26 @@ class MainBanner extends Component {
             {/* ===============  Main banner area end =============== */}
 
             {/* ===============  findfrom area start ============= */}
-            <div className="find-form">
+            <div  className="find-form">
                 <div className="container">
-                    <form className="findfrom-wrapper">
+                    <form id="search"className="findfrom-wrapper">
                         <div className="row">
-                            <div className="col-lg-3">
+                            
+                        <div  className="sidebar-searchbox">
+                                    <div className="input-group search-box">
+                                        <input type="text" className="form-control" placeholder="Where To?" aria-label="Recipient's username" aria-describedby="button-addon2" />
+                                        <button className="btn btn-outline-secondary" type="button" id="button-addon2" > <i className="bx bx-search" /></button>
+                                    </div>
+                                </div>
+                       
+                        {/* <div className="main-searchbar activeSearch">
+                            <input type="text" placeholder="Search Here......" />
+                            <div className="searchbar-icon">
+                                <i className="bx bx-search" />
+                            </div>
+                        </div> */}
+                
+                            {/* <div className="col-lg-3">
                                 <input type="text" name="whereto" placeholder="Where To..." />
                             </div>
                             <div className="col-lg-3">
@@ -129,7 +154,7 @@ class MainBanner extends Component {
                                 <div className="find-btn">
                                     <Link to={`#`} className="btn-second"><i className="bx bx-search-alt" /> Find now</Link>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </form>
                 </div>
