@@ -12,7 +12,7 @@ class Authentication{
             next();
         } catch (err) {
             return res.sendStatus(403).json({
-                message: 'Unauthorized access'
+                message: 'Unauthorized  access'
             })
         }
     } else {
