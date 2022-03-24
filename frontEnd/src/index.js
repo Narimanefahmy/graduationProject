@@ -28,7 +28,9 @@ import blog                             from "./components/pages/blog/BlogCompon
 import blogSidebar                      from "./components/pages/blog/BlogSidebar";
 import blogStandard                     from "./components/pages/blog/BlogStandard";
 import blogDetails                      from "./components/pages/blog/BlogDetails";
-
+import SearchResults                    from "./components/pages/search/SearchResults";
+// import AboutCity                        from "./components/pages/city/AboutCity";
+// import AboutCity from "./components/pages/city/AboutCity";
 
 //Initializations All Css
 import './index.css';
@@ -67,6 +69,8 @@ class Root extends React.Component{
                             <Route path={`${process.env.PUBLIC_URL}/blog-standard`} component={blogStandard} />
                             <Route path={`${process.env.PUBLIC_URL}/blog-details`} component={blogDetails} />
                             <Route path={`${process.env.PUBLIC_URL}/contact`} component={contact} />
+                            <Route path={`${process.env.PUBLIC_URL}/search`} component={SearchResults} />
+                             {/* <Route path={`${process.env.PUBLIC_URL}/city`} component={AboutCity} />  */}
                         </Layout>
                     </Switch>
             </BrowserRouter>

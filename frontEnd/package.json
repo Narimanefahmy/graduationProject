@@ -23,7 +23,7 @@
     "simple-react-lightbox": "^3.6.8",
     "web-vitals": "^1.1.2"
   },
-  "scripts": {
+   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
