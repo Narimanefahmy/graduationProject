@@ -41,6 +41,7 @@ class MyForm extends React.Component {
         </label>
         </div>
         </form>
+       
 
         <input type="submit" value="Submit" />
       </form>

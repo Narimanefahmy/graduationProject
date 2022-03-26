@@ -20,20 +20,20 @@ class Destinations extends Component {
         };
     }
 
-    fetchData() {
-        fetch('http://localhost:8000/backend')
-          .then(response => response.json())
-          .then(data => {
-            this.setState({ places: data.placeData,
-            hotels: data.hotelData,
-            attractions: data.attractionData,
-            restaurants: data.restaurantData });
-        });
-    }
+    // fetchData() {
+    //     fetch('http://localhost:8000/backend')
+    //       .then(response => response.json())
+    //       .then(data => {
+    //         this.setState({ places: data.placeData,
+    //         hotels: data.hotelData,
+    //         attractions: data.attractionData,
+    //         restaurants: data.restaurantData });
+    //     });
+    // }
 
-    componentDidMount(){
-        this.fetchData()
-    }
+    // componentDidMount(){
+    //     this.fetchData()
+    // }
   
 
     render() {
@@ -175,7 +175,7 @@ class Destinations extends Component {
                         </div>
                     </div>
                     <OwlCarousel  className="offer-slider dark-nav owl-carousel "  {...destinationsOptions}>
-                        {placesHTML} 
+                        {/* {placesHTML}  */}
                     </OwlCarousel>
                 </div>
             </div>
@@ -191,7 +191,7 @@ class Destinations extends Component {
                         </div>
                     </div>
                     <OwlCarousel  className="offer-slider dark-nav owl-carousel "  {...destinationsOptions}>
-                        {hotelsHTML} 
+                        {/* {hotelsHTML}  */}
                     </OwlCarousel>
                 </div>
             </div>
@@ -207,7 +207,7 @@ class Destinations extends Component {
                         </div>
                     </div>
                     <OwlCarousel  className="offer-slider dark-nav owl-carousel "  {...destinationsOptions}>
-                        {attractionsHTML} 
+                        {/* {attractionsHTML}  */}
                     </OwlCarousel>
                 </div>
             </div>
@@ -223,7 +223,7 @@ class Destinations extends Component {
                         </div>
                     </div>
                     <OwlCarousel  className="offer-slider dark-nav owl-carousel "  {...destinationsOptions}>
-                        {restaurantsHTML} 
+                        {/* {restaurantsHTML}  */}
                     </OwlCarousel>
                 </div>
             </div>
