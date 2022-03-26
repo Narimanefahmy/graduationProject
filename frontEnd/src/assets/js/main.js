@@ -173,16 +173,26 @@
   
     // Search Bar js
     var searchOpen = document.querySelectorAll('.searchbar-open i')
+    var searchOpen2 = document.querySelectorAll('.searchbar-open2 i')
     var searchCard = document.querySelectorAll('.main-searchbar')
+    var searchCard2= document.querySelectorAll('.main-searchbar2')
     var searchClose = document.querySelectorAll('.searchbar-close i')
 
     searchOpen.forEach((el)=>{
         el.addEventListener('click',()=>{
-          searchCard.forEach((el)=>{
-            el.classList.add('activeSearch')
+        searchCard.forEach((el)=>{
+        el.classList.add('activeSearch')
           })
         })
     })
+     searchOpen2.forEach((el)=>{
+       el.addEventListener('click',()=>{
+        searchCard2.forEach((el)=>{
+        el.classList.add('activeSearch')
+           })
+        })
+   })
+  
     searchClose.forEach((el)=>{
         el.addEventListener('click',()=>{
           searchCard.forEach((el)=>{
@@ -190,8 +200,30 @@
           })
         })
     })
+    searchClose.forEach((el)=>{
+        el.addEventListener('click',()=>{
+          searchCard2.forEach((el)=>{
+            el.classList.remove('activeSearch')
+          })
+        })
+    })
     window.onclick = function(event){
         searchCard.forEach((el)=>{
+          if(event.target == el){
+            el.classList.remove('activeSearch')
+          }
+        })
+        if(!event.target.matches('.user-dropdown-icon i')){
+          accountCard.forEach((element)=>{
+            if(element.classList.contains('activeCard')){
+              element.classList.remove('activeCard')
+            }
+          })
+        }
+    }
+  
+    window.onclick = function(event){
+        searchCard2.forEach((el)=>{
           if(event.target == el){
             el.classList.remove('activeSearch')
           }

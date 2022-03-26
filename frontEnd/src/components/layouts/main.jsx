@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 
 import HomePage from "../pages/home/HomePage";
-import Headers from "../common/headers";
+
+import Header from "../common/header";
 import Footers from "../common/footers";
 
 //default layout
@@ -18,7 +19,7 @@ class MainLayout extends Component {
   render() {
     return (
         <>
-          <Headers/>
+        <Header />
               <HomePage/>
           <Footers/>
         </>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Headers from "./common/headers";
+import Header from "./common/header";
 import Footers from "./common/footers";
 
 //For Others route calling this layout
@@ -7,7 +7,7 @@ class Layout extends Component {
     render() {
         return (
             <>
-                <Headers/>
+                <Header/>
                 {this.props.children}
                 <Footers/>
             </>

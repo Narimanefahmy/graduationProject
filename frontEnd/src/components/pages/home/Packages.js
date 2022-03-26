@@ -8,6 +8,7 @@ import package3Img from "../../../assets/images/package/p-3.png"
 import package4Img from "../../../assets/images/package/p-4.png"
 import package5Img from "../../../assets/images/package/p-5.png"
 import package6Img from "../../../assets/images/package/p-6.png"
+import MainBanner from "./MainBanner";
 
 class Packages extends Component {
 
