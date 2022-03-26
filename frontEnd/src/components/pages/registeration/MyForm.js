@@ -14,7 +14,7 @@ class MyForm extends React.Component {
   handleSubmit = (event) => {
     alert('A form was submitted: ' + this.state);
  
-    fetch('http://localhost:3000/store-data', {
+    fetch('http://localhost:8000/signin', {
         method: 'POST',
         // We convert the React state to JSON and send it as the POST body
         body: JSON.stringify(this.state)
