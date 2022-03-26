@@ -7,47 +7,39 @@ import "react-datepicker/dist/react-datepicker.css";
 import {Link,NavLink} from "react-router-dom";
 
 import pv_1 from "../../../assets/images/package/pv-1.png"
-import SearchResults from "../search/SearchResults";
-import axios from 'axios';
 
-import {withRouter} from 'react-router';
-import { useState } from "react";
-import PackageDetails from "../package/PackageDetails";
 class MainBanner extends Component {
-   
-   // const [title, setTitle] = useState('');
-         
+
   constructor(props) {
       super(props);
       this.state = {
           isToggleOn: true,
       };
-      this.handleClick = this.handleClick.bind(this);
-      }
-     
-      _handleKeyDown = (ev) => {
-        if (ev.key ==="Enter") {
-            ev.preventDefault();                                            
-            window.location.replace("../search/SearchResults"); 
-            console.table(ev.target.value);
-         
-          }
-      }
-    handleClick() {
-     
-        document.getElementById("myDropdown").classList.toggle("show");
-    }
-
-    makeArray() {
-        const searchArray = ["hilton", "sovotel", "sheraton", "sar","sar","sar"];
-       
-        return searchArray;
-        
-    }
       
-  
+      this.handleClick = this.handleClick.bind(this);
+    //   this.state = {
+    //     count: 0
+//     this.state = {
+//         startDate: new Date(),
+              
+  }
+  handleClick() {
+ document.getElementById("myDropdown").classList.toggle("show");
+//      // var checkInput = document.getElementById("name");
+//     //   if (checkInput.value) {
+//     //       document.getElementById("tar").style.display = "none";
+//     //   }
+   }
+//    changeDatepickerHandeller=(date)=>{
+//         this.setState({ startDate: date });
+//     }
+//     componentDidMount() {
+//         // this.setState({});
+    
+//         document.getElementById("myDropdown").classList.toggle("show");
+// }
 
- 
+  
     
 scrollTop()
 {
@@ -56,12 +48,14 @@ scrollTop()
         behavior: "smooth"
     });
     }
+    
    
 
 
     render() {
-    
-          
+       
+  
+
         const mainBannerOptions = {
             items: 1,
             loop: true,
@@ -94,29 +88,25 @@ scrollTop()
             }
         };
 
-      
-    
-     
+        //const startDate = this.state.startDate;
+        const searchArray = ["hilton", "sovotel", "sheraton", "sar"]
         //this.state.attractions
         const placesHTML = []
-        const resultHTML = []
-        const array = this.makeArray();
+        const resultHTML =[]
         // eslint-disable-next-line 
-        for (let i = 0; i < array.length; i++) {
+        for (let i = 0; i <searchArray.length; i++) {
            
-            if (i <= 3) {
+            if (i <= 2) {
                 //if there is result in database
                 placesHTML.push(
-                    <Link to={`${process.env.PUBLIC_URL}/package-details`}>
-                    <a href="">
+                    <a href="#about">
                         <div class="image-search"><picture>
                             <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
                                 width="100" height="75" alt="">
                             </img>
                         </picture></div>
-                        <div class="description"><div><div class="city-name">{array[i]}</div><div> Paris Centre Gare Montparnasse</div></div><div ><div>Paris, Ile-de-France, France</div></div></div>
-                        </a>
-                        </Link>
+                        <div class="description"><div><div class="city-name">{searchArray[i]}</div><div> Paris Centre Gare Montparnasse</div></div><div ><div>Paris, Ile-de-France, France</div></div></div>
+                    </a>
                 )
             } else {
                 resultHTML.push(
@@ -143,7 +133,13 @@ scrollTop()
             }
            
         }
-        
+      
+            {/* <Link
+            to={{
+                pathname: "../search/SearchResults",
+                data: resultHTML // your data array of objects
+            }}
+        </Link> */}
         placesHTML.push(
             <NavLink activeClassName="active" to={`${process.env.PUBLIC_URL}/search`} onClick={this.scrollTop} >see all results</NavLink>
         )
@@ -151,13 +147,18 @@ scrollTop()
             <NavLink activeClassName="active" to={`${process.env.PUBLIC_URL}/search`} onClick={this.scrollTop} >see all results</NavLink> 
         )
 
-  
-        return (
-            <>
+        // if (this.state.isWritten) {
+         
+        // if (document.getElementById("name").value)
+        // {
+        //     return null;
             
-                {/* ===============  Main banner area start =============== */}
-             
-                <div className="MainBanner"></div>
+        //     }
+        
+       
+    return (
+        <>
+            {/* ===============  Main banner area start =============== */}
             <div className="main-banner">
                 <OwlCarousel className="banner-slider owl-carousel"  {...mainBannerOptions}>
                     <div className="slider-item slider-item-1">
@@ -207,22 +208,21 @@ scrollTop()
                         <div className="row">
                             <div className="sidebar-searchbox">
                                 
+                           
                                 <div class="dropdown">
                                     
                                 <div class="input-group search-box ">
                                
-                                            <input type="text" id="name" className="form-control" placeholder="Where To?" aria-label="Recipient's username" aria-describedby="button-addon2" onClick={this.handleClick}
-                                                onKeyPress={(ev) => { this._handleKeyDown(ev) }}
-                                                autocomplete="off"
-                                           />
+                                    <input type="text" id="name"className="form-control" placeholder="Where To?" aria-label="Recipient's username" aria-describedby="button-addon2" onClick={this.handleClick} />
                                      
-                                            <button className="btn btn-outline-secondary " type="button" id="button-addon2" >
+                                        <button className="btn btn-outline-secondary " type="button" id="button-addon2" >
                                         {/* {this.state.isToggleOn ? 'ON' : 'OFF'} */}
                                             <i className="bx bx-search" /></button>
                                 </div>
-                               
+                              
+                                       
                                         <div id="myDropdown" class="dropdown-content">
-                                             {/* <a id="tar" href="#about">
+                                             <a id="tar" href="#about">
                                            
                                                 <div class="image-search"><picture>
                                                     <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
@@ -230,7 +230,7 @@ scrollTop()
                                                     </img>
                                                 </picture></div>
                                                 <div class="description"><div><div class="city-name">hhh</div><div> Paris Centre Gare Montparnasse</div></div><div ><div>Paris, Ile-de-France, France</div></div></div>
-                                            </a>  */}
+                                            </a> 
                                            
                                         
 

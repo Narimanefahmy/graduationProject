@@ -3,34 +3,9 @@ import {Link,NavLink}               from "react-router-dom";
 
 //Import Image
 import logoMain             from "../../assets/images/logo.png"
-import secondLogo from "../../assets/images/logo-2.png"
-import SearchResults from "../pages/search/SearchResults";
-import pv_1 from "../../assets/images/package/pv-1.png";
+import secondLogo           from "../../assets/images/logo-2.png"
 
-class Header extends Component {
-    constructor(props) {
-        super(props);
-    this.state = {
-        isToggleOn: true,
-    };
-    this.handleClick = this.handleClick.bind(this);
-    }
-   
-    _handleKeyDown = (ev) => {
-      if (ev.key === "Enter") {
-        ev.preventDefault();                                            
-        window.location.replace("../pages/search/SearchResults"); 
-        }
-    }
-    handleClick() {
-        document.getElementById("Dropdown").classList.toggle("show");
-    }
-  makeArray() {
-      const searchArray = ["hilton", "sovotel", "sheraton", "sar"];
-      return searchArray;
-      
-  }
-    
+class Headers extends Component {
     scrollTop()
     {
         window.scrollTo({
@@ -41,59 +16,6 @@ class Header extends Component {
    
     render() {
        
-        //this.state.attractions
-        const placesHTML = []
-        const resultHTML = []
-        const array = this.makeArray();
-        // eslint-disable-next-line 
-        for (let i = 0; i < array.length; i++) {
-           
-            if (i <= 2) {
-                //if there is result in database
-                placesHTML.push(
-                    <Link to={`${process.env.PUBLIC_URL}/package-details`}>
-                    <a href="">
-                        <div class="image-search"><picture>
-                            <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
-                                width="100" height="75" alt="">
-                            </img>
-                        </picture></div>
-                        <div class="description"><div><div class="city-name">{array[i]}</div><div> Paris Centre Gare Montparnasse</div></div><div ><div>Paris, Ile-de-France, France</div></div></div>
-                        </a>
-                        </Link>)
-            } else {
-                resultHTML.push(
-                    <div className="package-card-xl">
-                        <div className="package-thumb-xl">
-                            <Link to={`${process.env.PUBLIC_URL}/package-details`}>
-                                <img src={pv_1} alt="" className="img-fluid" />
-                            </Link>
-                        </div>
-                        <div className="package-details-xl">
-                            <div className="package-info">
-                                <h5><span>$180</span>/Per Person</h5>
-                            </div>
-                            <h3><i className="flaticon-arrival" />
-                                <Link to={`${process.env.PUBLIC_URL}/package-details`}>Paris Hill Tour</Link>
-                            </h3>
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem saepe amet magni!</p>
-                            <div className="package-rating">
-                                <strong><i className="bx bxs-star" /><span>8K+</span> Rating</strong>
-                            </div>
-                        </div>
-                    </div>
-                )
-            }
-           
-        }
-        
-        placesHTML.push(
-            <NavLink activeClassName="active" to={`${process.env.PUBLIC_URL}/search`} onClick={this.scrollTop} >see all results</NavLink>
-        )
-        resultHTML.push(
-            <NavLink activeClassName="active" to={`${process.env.PUBLIC_URL}/search`} onClick={this.scrollTop} >see all results</NavLink> 
-        )
-
        
         return (
             <>
@@ -214,12 +136,14 @@ class Header extends Component {
                                         <li> 
                                         <span className="searchbar-open">
                                             <i><span class="span-search">Restaurants
-                                        </span></i></span>
+                                                </span></i></span>
+                                              
+                                             
                                         </li>
                                         <li>
                                         <span className="searchbar-open">
                                             <i><span class="span-search">Rent car
-                                            </span></i></span>
+                                                </span></i></span>
                                               
                                         </li>
                                         <li>
@@ -258,7 +182,7 @@ class Header extends Component {
                                         <li>
                                         <span className="searchbar-open">
                                             <i><span class="span-search">Tour Guide 
-                                             </span></i></span>
+                                                </span></i></span>
                                               
                                         </li>
                                         <li>
@@ -315,55 +239,12 @@ class Header extends Component {
                         <div className="main-searchbar">
                             <div className="searchbar-close">    
                             </div>
-                            <input type="text" placeholder="Search Here......"  onClick={this.handleClick}
-                                            onKeyPress={(ev) => { this._handleKeyDown(ev) }}
-                                            autocomplete="off"/>
+                            <input type="text" placeholder="Search Here......" />
                             <div className="searchbar-icon">
                                 <i className="bx bx-search" />
                             </div>
-                        
-                          <div id="Dropdown" class="dropdown-conten">
-                                             {/* <a id="tar" href="#about">
-                                           
-                                                <div class="image-search"><picture>
-                                                    <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
-                                                        width="100" height="75" alt="">
-                                                    </img>
-                                                </picture></div>
-                                                <div class="description"><div><div class="city-name">hhh</div><div> Paris Centre Gare Montparnasse</div></div><div ><div>Paris, Ile-de-France, France</div></div></div>
-                                            </a> 
-                                            */}
-                                            {placesHTML}
-                                            </div>
-                           </div>           
-                        </form>
-                    <form>
-                        <div className="main-searchbar2">
-                            <div className="searchbar-close">    
-                            </div>
-                            <input type="text" placeholder="Search Here......"  onClick={this.handleClick}
-                                            onKeyPress={(ev) => { this._handleKeyDown(ev) }}
-                                            autocomplete="off"/>
-                            <div className="searchbar-icon">
-                                <i className="bx bx-search" />
-                            </div>
-                        
-                          <div id="Dropdown" class="dropdown-conten">
-                                             {/* <a id="tar" href="#about">
-                                           
-                                                <div class="image-search"><picture>
-                                                    <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
-                                                        width="100" height="75" alt="">
-                                                    </img>
-                                                </picture></div>
-                                                <div class="description"><div><div class="city-name">hhh</div><div> Paris Centre Gare Montparnasse</div></div><div ><div>Paris, Ile-de-France, France</div></div></div>
-                                            </a> 
-                                            */}
-                                            {placesHTML}
-                                            </div>
-                           </div>           
-                        </form>
-                       
+                        </div>
+                    </form>
 
                 </div>
             </header>
@@ -373,4 +254,4 @@ class Header extends Component {
     }
 }
 
-export default Header;
+export default Headers;
