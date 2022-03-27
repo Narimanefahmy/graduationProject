@@ -8,7 +8,7 @@ const KEY = require('../env_variables/env_vars.json').KEY;
 class getUser{
     getUsers = async(req, res) => {
         try {
-            const users = await userModel.findAll({
+            const users = await userModel.find({
                 attributes:['id','username','email']
             });
             res.json(users);

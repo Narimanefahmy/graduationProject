@@ -76,7 +76,7 @@ class Root extends React.Component{
                             <Route path={`${process.env.PUBLIC_URL}/tourist`} component={tourist} />
                             <Route path={`${process.env.PUBLIC_URL}/tourGuide`} component={tourGuide} />
                             <Route path={`${process.env.PUBLIC_URL}/admin`} component={admin} />
-                            <Route path={`${process.env.PUBLIC_URL}/form`} component={form} />
+                            {/* <Route path={`${process.env.PUBLIC_URL}/SignIn`} component={SignIn} /> */}
                         </Layout>
                     </Switch>
             </BrowserRouter>

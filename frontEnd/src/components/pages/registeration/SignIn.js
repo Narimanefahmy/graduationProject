@@ -11,6 +11,8 @@ class SignIn extends React.Component {
        //msg:null,
        
       };
+      console.table(this.email);
+      console.table(this.password);
   };
   /**   const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

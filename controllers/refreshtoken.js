@@ -4,28 +4,28 @@ const jwt = require('jsonwebtoken');
 
 const userModel = require('../database_seeds/models/user');
 const mongoosePort = require('../env_variables/env_vars.json').mongoosePort;
-const KEY = require('../env_variables/env_vars.json').KEY;
+const Keyrefresh = require('../env_variables/env_vars.json').Keyrefresh;
+const KeyAccess= require('../env_variables/env_vars.json').KeyAccess;
 class refreshtoken {
       refreshToken = async(req, res) => {
         try {
-            const refreshToken = req.cookies.refreshToken;
+            const refreshToken = req.cookie.refreshToken;
+            console.log(refreshToken)
             if(!refreshToken) return res.sendStatus(401);
-            const user = await userModel.findAll({
-                where:{
-                    refresh_token: refreshToken
-                }
-            });
-            if(!user[0]) return res.sendStatus(403);
-            jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
+             await userModel.findAll({refresh_token: refreshToken})
+            .then((docs) => {
+                if (docs.length == 0){
+                        res.json("notFound!")
+                } else {
+                    var user = docs[0];
+            jwt.verify(refreshToken, Keyrefresh, (err, decoded) => {
                 if(err) return res.sendStatus(403);
-                const userId = user[0].id;
-                const name = user[0].name;
-                const email = user[0].email;
-                const accessToken = jwt.sign({userId, name, email}, process.env.ACCESS_TOKEN_SECRET,{
-                    expiresIn: '15s'
+                
+                const accessToken = jwt.sign({user}, KeyAccess,{
+                    expiresIn: '2hr'
                 });
                 res.json({ accessToken });
-            });
+                  });}})
         } catch (error) {
             console.log(error);
         }
