@@ -5,18 +5,24 @@ const cors = require('cors')
 const signup = require('./controllers/signup');//import signup
 const signin = require('./controllers/signin'); 
 const search = require('./controllers/search'); 
-const auth = require('./middlewear/auth')
-const { collectData } = require('./controllers/collectData')
+const Logout = require('./controllers/logout'); 
+const getUser = require('./controllers/getUser'); 
+const refreshtoken = require('./controllers/refreshtoken'); 
+const verifytoken = require('./middlewear/verifytoken')
+const { collectData } = require('./controllers/collectData');
+const { verify } = require('crypto');
 
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cors())
-
+app.get('/users',verifytoken.verifyToken,getUser.getUsers)
 app.post('/signup', signup.signup)
 app.post('/signin', signin.signin)
 app.get('/search',search.search)
 app.get('/backend', collectData)
+app.get('/token',refreshtoken.refreshToken)
+app.delete('/logout',Logout.Logout)
 /*
 var fetchOptions = {
     method: "POST",

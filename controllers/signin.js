@@ -3,6 +3,7 @@ const crypto = require('crypto')
 const jwt = require('jsonwebtoken');
 
 const userModel = require('../database_seeds/models/user');
+const { refreshToken } = require('./refreshtoken');
 const mongoosePort = require('../env_variables/env_vars.json').mongoosePort;
 const KEY = require('../env_variables/env_vars.json').KEY;
 
@@ -18,9 +19,14 @@ signin = (req, res) => {
                 res.json("notFound!")
         } else {
             var user = docs[0];
-            jwt.sign({user}, KEY, {expiresIn: '2h'}, (err, token) => {
-                res.json(token)
-             })
+            const accessToken=jwt.sign({user}, KEY, {expiresIn: '15s'})
+            const refreshToken= jwt.sign({user}, KEY, {expiresIn: '1d' })
+             userModel.updateOne({refresh_token:refreshToken},{id:docs[0].id});
+             res.cookie('refreshToken',refreshToken,{
+                 httpOnly:true,
+                 maxAge: 24 * 60 * 60 * 1000
+             });
+             res.json({accessToken})
         }
     })}
 }
