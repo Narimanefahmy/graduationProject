@@ -7,12 +7,12 @@ class SignIn extends React.Component {
     super(props);
     this.state = {
        email: null,
-       password: null
+       password: null,
+       token: null
        //msg:null,
        
       };
-      console.table(this.email);
-      console.table(this.password);
+      
   };
   /**   const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -36,6 +36,13 @@ class SignIn extends React.Component {
             "Content-type": "application/json; charset=UTF-8"
         }
     })
+    .then(response => response.json())
+    .then(data=>{
+      this.setState({token: data.accessToken})
+    })
+    console.table(this.state.email);
+    console.table(this.state.password);
+    console.table(this.state.token)
 
   }
 

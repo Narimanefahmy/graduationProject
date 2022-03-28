@@ -9,7 +9,7 @@ const KeyAccess= require('../env_variables/env_vars.json').KeyAccess;
 class refreshtoken {
       refreshToken = async(req, res) => {
         try {
-            const refreshToken = req.cookie.refreshToken;
+            const refreshToken = req.cookies.refreshToken;
             console.log(refreshToken)
             if(!refreshToken) return res.sendStatus(401);
              await userModel.findAll({refresh_token: refreshToken})
@@ -22,7 +22,7 @@ class refreshtoken {
                 if(err) return res.sendStatus(403);
                 
                 const accessToken = jwt.sign({user}, KeyAccess,{
-                    expiresIn: '2hr'
+                    expiresIn: '15s'
                 });
                 res.json({ accessToken });
                   });}})
