@@ -8,6 +8,7 @@ const url = require("../env_variables/env_vars.json").mongoosePort;
 
 mongoose.connect(url)
 
+
 var HotelsArray = []
 var attractionsArray = []
 var placesArray=[]
@@ -15,13 +16,8 @@ var restaurantsArray=[]
 class Search{
    search = async(req, res, next) => {
     try {
-      const search_field  = req.body.name;
-      const search_value  = req.body.value;
-      const queryObj = {};
-
-    if (search_field !== '' && search_value !== '') {
-      queryObj[search_field] = search_value;
-    }
+      const search_field  = req.body.search;
+     
         HotelsArray = await hotelsModel.find({name :{$regex: search_field, $options: "i"}} ,"city name").exec();
          HotelsArray = [...HotelsArray.map(({name,city})=> {
             return {name,city};
@@ -54,6 +50,9 @@ class Search{
         next()
         return 'error ocurred'
     }
+    
+    return placesArray,HotelsArray,attractionsArray,restaurantsArray;
+
 }
 }
    module.exports = new Search;

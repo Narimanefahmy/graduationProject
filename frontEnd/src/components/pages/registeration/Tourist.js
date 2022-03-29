@@ -3,19 +3,72 @@ import {Link} from "react-router-dom";
 import OwlCarousel from 'react-owl-carousel';
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
+import { useHistory } from 'react-router-dom';
 
 
-class SignIn extends Component {
-  
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            count: 1
-            
-        };
-    }
-
+class Tourist extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+       email: null,
+       password: null,
+       username:null,
+       phone:null,
+       nationality:null,
+       type:"Tourist"
+       //msg:null,
+       
+      };
+      
+  };
+    
+ 
+    
+        
+  /**   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [msg, setMsg] = useState('');
+  const history = useHistory(); */
+        
+handleSubmit = (event) => {
+alert('A form was submitted: ');
+event.preventDefault();
+}
+          
+          
+fetchData() {
+              fetch("http://localhost:8000/signup", {
+                  method: "POST",
+                  body: JSON.stringify({
+                     email: this.state.email,
+                     password: this.state.password,
+                     username:this.state.username,
+                     phone:this.state.phone,
+                     nationality:this.state.nationality,
+                     type:this.state.type
+                  }),
+                  headers: {
+                      "Content-type": "application/json; charset=UTF-8"
+                  }
+              })
+              .then(response => response.json())
+              // .then(data=>{
+              //   this.setState({token: data.accessToken})
+              // })
+              console.table(this.state.email);
+              console.table(this.state.password);
+              console.table(this.state.username);
+              console.table(this.state.nationality);
+              console.table(this.state.password);
+          
+            }
+          
+            componentDidMount() {
+          
+            }
+          
+    
+    
   
 
     render() {
@@ -31,32 +84,35 @@ class SignIn extends Component {
                 <label>it's quick and easy </label>
                 <div className="input-container" >
                   <label>Username </label>
-                  <input type="text" name="uname" required />
+                  <input type="text2" name="username" required  value={this.state.username} onChange={(e) => this.setState({ username: e.target.value })}/>
       
                 </div>
                 <div className="input-container">
                   <label>Password </label>
-                  <input type="password" name="pass" required />
+                  <input type="password" name="password" required value={this.state.password} onChange={(e) => this.setState({ password: e.target.value })}  />
        
                 </div>
                 <div className="input-container">
                   <label>Email </label>
-                  <input type="email" name="email" required />
+                  <input type="email2" name="email" required value={this.state.email} onChange={(e) => this.setState({ email: e.target.value })} />
        
                 </div>
                 <div className="input-container">
                   <label>Phone no </label>
-                  <input type="phone" name="phone" required />
+                  <input type="phone" name="phone" required value={this.state.phone} onChange={(e) => this.setState({ phone: e.target.value })} />
        
                 </div>
                 <div className="input-container">
                   <label>Nationality</label>
-                  <input type="nationality" name="nationality" required />
+                  <input type="nationality" name="nationality" required value={this.state.nationality} onChange={(e) => this.setState({ nationality: e.target.value })} />
        
                 </div>
-                <div className="button-container">
+                {/* <div className="button-container">
                   <input type="submit" value="Sign up" />
-                </div>
+                </div> */}
+                <div className="button-container">
+            <input type="button" value="Sign up" onClick={() => this.fetchData()} />
+          </div>
 
                 <div class="textInHorizontalLine">
                     <span>Already a member?</span>
@@ -77,4 +133,9 @@ class SignIn extends Component {
 
 
  
-export default SignIn;
+export default Tourist;
+
+    
+  
+
+   

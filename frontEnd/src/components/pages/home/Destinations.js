@@ -20,20 +20,20 @@ class Destinations extends Component {
         };
     }
 
-    fetchData() {
-        fetch('http://localhost:8000/backend')
-          .then(response => response.json())
-          .then(data => {
-            this.setState({ places: data.placeData,
-            hotels: data.hotelData,
-            attractions: data.attractionData,
-            restaurants: data.restaurantData });
-        });
-    }
+    // fetchData() {
+    //     fetch('http://localhost:8000/backend')
+    //       .then(response => response.json())
+    //       .then(data => {
+    //         this.setState({ places: data.placeData,
+    //         hotels: data.hotelData,
+    //         attractions: data.attractionData,
+    //         restaurants: data.restaurantData });
+    //     });
+    // }
 
-    componentDidMount(){
-        this.fetchData()
-    }
+    // componentDidMount(){
+    //     this.fetchData()
+    // }
   
 
     render() {
