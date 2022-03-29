@@ -3,9 +3,65 @@ import {Link,NavLink}               from "react-router-dom";
 
 //Import Image
 import logoMain             from "../../assets/images/logo.png"
-import secondLogo           from "../../assets/images/logo-2.png"
+import secondLogo from "../../assets/images/logo-2.png"
+import pv_1 from "../../assets/images/package/pv-1.png"
+import SignIn from "../pages/registeration/SignIn";
 
 class Headers extends Component {
+
+    
+  constructor(props) {
+    super(props);
+    this.state = {
+        open: false,
+    };
+    
+   // this.handleClick = this.handleClick.bind(this);
+  //   this.state = {
+  //     count: 0
+//     this.state = {
+//         startDate: new Date(),
+            
+    }
+    container = React.createRef();
+    
+    _handleKeyDown = (ev) => {
+        if (ev.key === "Enter") {
+            ev.preventDefault();
+            window.location.replace("../search/SearchResults");
+           // console.table("ev.target.value");
+          }
+    }
+    handleButtonClick = () => {
+        if (this.state.open===false) {
+            this.setState((state) => {
+            
+                return {
+                    open: !state.open,
+                };
+            });
+        };
+    }
+
+    handleClickOutside = (event) => {
+        if (
+          this.container.current &&
+          !this.container.current.contains(event.target)
+        ) {
+          this.setState({
+            open: false,
+          });
+        }
+      };
+    // handleClick() {
+    //     document.getElementById("Dropdown").classList.toggle("show");
+    // }
+    componentDidMount() {
+        document.addEventListener("mousedown", this.handleClickOutside);
+    }
+    componentWillUnmount() {
+      document.removeEventListener("mousedown", this.handleClickOutside);
+    }
     scrollTop()
     {
         window.scrollTo({
@@ -16,7 +72,64 @@ class Headers extends Component {
    
     render() {
        
-       
+      //const startDate = this.state.startDate;
+      const searchArray = ["hilton", "sovotel", "sheraton", "sar"]
+      //this.state.attractions
+      const placesHTML = []
+      const resultHTML =[]
+      // eslint-disable-next-line 
+      for (let i = 0; i <searchArray.length; i++) {
+         
+          if (i <= 2) {
+              //if there is result in database
+              placesHTML.push(
+                  <a href="#about">
+                      <div class="image-search"><picture>
+                          <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
+                              width="100" height="75" alt="">
+                          </img>
+                      </picture></div>
+                      <div class="description"><div><div class="city-name">{searchArray[i]}</div><div> Paris Centre Gare Montparnasse</div></div><div ><div>Paris, Ile-de-France, France</div></div></div>
+                  </a>
+              )
+          } else {
+              resultHTML.push(
+                  <div className="package-card-xl">
+                      <div className="package-thumb-xl">
+                          <Link to={`${process.env.PUBLIC_URL}/package-details`}>
+                              <img src={pv_1} alt="" className="img-fluid" />
+                          </Link>
+                      </div>
+                      <div className="package-details-xl">
+                          <div className="package-info">
+                              <h5><span>$180</span>/Per Person</h5>
+                          </div>
+                          <h3><i className="flaticon-arrival" />
+                              <Link to={`${process.env.PUBLIC_URL}/package-details`}>Paris Hill Tour</Link>
+                          </h3>
+                          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem saepe amet magni!</p>
+                          <div className="package-rating">
+                              <strong><i className="bx bxs-star" /><span>8K+</span> Rating</strong>
+                          </div>
+                      </div>
+                  </div>
+              )
+          }
+         
+      }
+    
+          {/* <Link
+          to={{
+              pathname: "../search/SearchResults",
+              data: resultHTML // your data array of objects
+          }}
+      </Link> */}
+      placesHTML.push(
+          <NavLink activeClassName="active" to={`${process.env.PUBLIC_URL}/search`} onClick={this.scrollTop} >see all results</NavLink>
+      )
+      resultHTML.push(
+          <NavLink activeClassName="active" to={`${process.env.PUBLIC_URL}/search`} onClick={this.scrollTop} >see all results</NavLink> 
+      )  
         return (
             <>
                 {/* =============== Topbar area start =============== */}
@@ -134,7 +247,7 @@ class Headers extends Component {
                                          </span></i></span>
                                         </li>
                                         <li> 
-                                        <span className="searchbar-open">
+                                        <span className="searchbar-open2">
                                             <i><span class="span-search">Restaurants
                                                 </span></i></span>
                                               
@@ -234,17 +347,45 @@ class Headers extends Component {
                             </div>
                         </div>
                     </div>
-
                     <form>
-                        <div className="main-searchbar">
+                        <div className="main-searchbar" ref={this.container} >
                             <div className="searchbar-close">    
                             </div>
-                            <input type="text" placeholder="Search Here......" />
+                                <input type="text" placeholder="Search Here......"
+                                    // onClick={this.handleClick}
+                                    onClick={this.handleButtonClick}
+                                autoComplete="off"
+                                onKeyPress={(ev) => { this._handleKeyDown(ev)}}/>
                             <div className="searchbar-icon">
                                 <i className="bx bx-search" />
                             </div>
-                        </div>
+                            {this.state.open && (
+                            <div id="Dropdown" class="dropdown-conten">
+                                  {placesHTML}
+                                    </div>  
+                                     )}
+                                      </div>
                     </form>
+                    <form>
+                        <div className="main-searchbar2"ref={this.container} >
+                            <div className="searchbar-close2">    
+                            </div>
+                                <input type="text" placeholder="Search Here......"
+                                    // onClick={this.handleClick}
+                                onClick={this.handleButtonClick}
+                                autoComplete="off"
+                                onKeyPress={(ev) => { this._handleKeyDown(ev)}}/>
+                            <div className="searchbar-icon">
+                                <i className="bx bx-search" />
+                            </div>
+                            {this.state.open && (
+                            <div id="Dropdown" class="dropdown-conten">
+                                  {placesHTML}
+                                    </div>  
+                                     )}
+                                      </div>
+                    </form>
+                   
 
                 </div>
             </header>

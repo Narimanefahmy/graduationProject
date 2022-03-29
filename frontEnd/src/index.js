@@ -28,19 +28,13 @@ import blog                             from "./components/pages/blog/BlogCompon
 import blogSidebar                      from "./components/pages/blog/BlogSidebar";
 import blogStandard                     from "./components/pages/blog/BlogStandard";
 import blogDetails                      from "./components/pages/blog/BlogDetails";
-<<<<<<< HEAD
-import SearchResults                    from "./components/pages/search/SearchResults";
-// import AboutCity                        from "./components/pages/city/AboutCity";
-// import AboutCity from "./components/pages/city/AboutCity";
-
-=======
 import signIn                           from "./components/pages/registeration/SignIn";
 import typeOfUser                       from "./components/pages/registeration/TypeOfUser";
 import tourist                          from "./components/pages/registeration/Tourist";
 import tourGuide                        from "./components/pages/registeration/TourGuide";
 import admin                            from "./components/pages/registeration/Admin";
-import form                            from "./components/pages/registeration/MyForm";
->>>>>>> 94e2cd9971e55663f0cedfce155391730e79a561
+import form from "./components/pages/registeration/MyForm";
+import SearchResults from "./components/pages/search/SearchResults";
 //Initializations All Css
 import './index.css';
 import './index.scss';
@@ -78,17 +72,13 @@ class Root extends React.Component{
                             <Route path={`${process.env.PUBLIC_URL}/blog-standard`} component={blogStandard} />
                             <Route path={`${process.env.PUBLIC_URL}/blog-details`} component={blogDetails} />
                             <Route path={`${process.env.PUBLIC_URL}/contact`} component={contact} />
-<<<<<<< HEAD
-                            <Route path={`${process.env.PUBLIC_URL}/search`} component={SearchResults} />
-                             {/* <Route path={`${process.env.PUBLIC_URL}/city`} component={AboutCity} />  */}
-=======
                             <Route path={`${process.env.PUBLIC_URL}/registeration`} component={signIn} />
                             <Route path={`${process.env.PUBLIC_URL}/typeOfUser`} component={typeOfUser} />
                             <Route path={`${process.env.PUBLIC_URL}/tourist`} component={tourist} />
                             <Route path={`${process.env.PUBLIC_URL}/tourGuide`} component={tourGuide} />
                             <Route path={`${process.env.PUBLIC_URL}/admin`} component={admin} />
                             <Route path={`${process.env.PUBLIC_URL}/form`} component={form} />
->>>>>>> 94e2cd9971e55663f0cedfce155391730e79a561
+                            <Route path={`${process.env.PUBLIC_URL}/search`} component={SearchResults} />
                         </Layout>
                     </Switch>
             </BrowserRouter>

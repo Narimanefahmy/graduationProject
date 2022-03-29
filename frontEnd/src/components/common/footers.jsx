@@ -134,12 +134,22 @@ class Footers extends Component {
 
             // Search Bar js
             var searchOpen = document.querySelectorAll('.searchbar-open i')
+            var searchOpen2 = document.querySelectorAll('.searchbar-open2 i')
             var searchCard = document.querySelectorAll('.main-searchbar')
+            var searchCard2 = document.querySelectorAll('.main-searchbar2')
             var searchClose = document.querySelectorAll('.searchbar-close i')
+            var searchClose2 = document.querySelectorAll('.searchbar-close2 i')
 
             searchOpen.forEach((el)=>{
                 el.addEventListener('click',()=>{
                     searchCard.forEach((el)=>{
+                        el.classList.add('activeSearch')
+                    })
+                })
+            })
+            searchOpen2.forEach((el)=>{
+                el.addEventListener('click',()=>{
+                    searchCard2.forEach((el)=>{
                         el.classList.add('activeSearch')
                     })
                 })
@@ -151,11 +161,23 @@ class Footers extends Component {
                     })
                 })
             });
+            searchClose2.forEach((el)=>{
+                el.addEventListener('click',()=>{
+                    searchCard2.forEach((el)=>{
+                        el.classList.remove('activeSearch')
+                    })
+                })
+            });
 
             window.onclick = function(event){
                 searchCard.forEach((el)=>{
                     if(event.target === el){
                         el.classList.remove('activeSearch')
+                    }
+                });
+                searchCard2.forEach((el)=>{
+                            if(event.target === el){
+                               el.classList.remove('activeSearch')
                     }
                 });
                 if(!event.target.matches('.user-dropdown-icon i')){
@@ -166,6 +188,20 @@ class Footers extends Component {
                     })
                 }
             };
+            // window.onclick = function(event){
+            //     searchCard2.forEach((el)=>{
+            //         if(event.target === el){
+            //             el.classList.remove('activeSearch')
+            //         }
+            //     });
+            //     if(!event.target.matches('.user-dropdown-icon i')){
+            //         accountCard.forEach((element)=>{
+            //             if(element.classList.contains('activeCard')){
+            //                 element.classList.remove('activeCard')
+            //             }
+            //         })
+            //     }
+            // };
 
             // sticky navabr js
             $(window).on('scroll',function () {

@@ -2,44 +2,134 @@ import React, { Component } from "react";
 import OwlCarousel from 'react-owl-carousel';
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-
 import "react-datepicker/dist/react-datepicker.css";
 import {Link,NavLink} from "react-router-dom";
-
 import pv_1 from "../../../assets/images/package/pv-1.png"
+ import SearchResults from "../search/SearchResults";
+import PackageDetails from "../package/PackageDetails";
+import { useState } from 'react';
+
+
 
 class MainBanner extends Component {
 
   constructor(props) {
       super(props);
       this.state = {
-          isToggleOn: true,
+          open: false,
+          search: null,
+          places: null,
+          hotels: null,
+          attractions: null,
+          restaurants: null
       };
-      
-      this.handleClick = this.handleClick.bind(this);
+    }
+
+    fetchData() {
+   
+        fetch('http://localhost:8000/search', {
+            method: "POST",
+            body: JSON.stringify({
+                search: this.state.search
+            }),
+            headers: {
+
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+              places: data.places,
+              hotels: data.hotels,
+              attractions: data.attraction,
+              restaurants: data.restaurant });
+              console.table(data) 
+            });
+            
+            console.table(this.state.hotels) 
+            console.table(this.state.places) 
+
+            //console.table(this.state.search)
+    }
+
+//     fetchData2() {
+//         fetch('http://localhost:8000/search')
+//             .then(response => response.json())
+//         .then(data => {
+//             this.setState({
+//           places: data.placesArray,
+//           hotels: data.HotelsArray,
+//           attractions: data.attractionsArray,
+//           restaurants: data.restaurantsArray });
+//         });
+//         console.table(this.state.places) 
+//   }
+     
+    //   this.handleClick = this.handleClick.bind(this);
     //   this.state = {
     //     count: 0
-//     this.state = {
-//         startDate: new Date(),
+    // this.state = {
+    //     startDate: new Date(),
               
-  }
-  handleClick() {
- document.getElementById("myDropdown").classList.toggle("show");
-//      // var checkInput = document.getElementById("name");
-//     //   if (checkInput.value) {
-//     //       document.getElementById("tar").style.display = "none";
-//     //   }
-   }
+    
+
+
+    container = React.createRef();
+    _handleKeyDown = (ev) => {
+        if (ev.key === "Enter") {
+            ev.preventDefault();
+             window.location.replace("../search/SearchResults");
+        }
+          console.table(this.state.search);
+    }
+
+    handleButtonClick = () => {
+        if (this.state.open===false) {
+            this.setState((state) => {
+            
+                return {
+                    open: !state.open,
+                };
+            });
+        };
+    }
+    
+//     handleClick() {
+      
+//       document.getElementById("myDropdown").classList.toggle("show");
+   
+// //      // var checkInput = document.getElementById("name");
+// //     //   if (checkInput.value) {
+// //     //       document.getElementById("tar").style.display = "none";
+// //     //   }
+//     }
+
+    handleClickOutside = (event) => {
+        if (
+          this.container.current &&
+          !this.container.current.contains(event.target)
+        ) {
+          this.setState({
+            open: false,
+          });
+        }
+      };
+    
 //    changeDatepickerHandeller=(date)=>{
 //         this.setState({ startDate: date });
 //     }
-//     componentDidMount() {
-//         // this.setState({});
-    
-//         document.getElementById("myDropdown").classList.toggle("show");
-// }
 
-  
+
+    componentDidMount() {
+     
+        //this.fetchData2();
+        document.addEventListener("mousedown", this.handleClickOutside);
+        
+}
+componentWillUnmount() {
+  document.removeEventListener("mousedown", this.handleClickOutside);
+}
     
 scrollTop()
 {
@@ -48,13 +138,31 @@ scrollTop()
         behavior: "smooth"
     });
     }
+// data = (users) => {
+//     <div className="viewusers">
+//          <h1>All users</h1>
+//          <div className="viewusers-list">
+//              {users.map((user) => {
+//                  return (
+//                  <React.Fragment>
+//                      <p> <b>Name</b> : {user.username} </p>
+//                      <p> <b>Email</b> : {user.email} </p>
+//                      <p> <b>Website role</b> : {user.websiteRole} </p>
+//                      <hr />
+//                  </React.Fragment>
+//                  )
+//              })}
+//          </div>
+//      </div>
+// }
+
+
+
     
-   
-
-
     render() {
        
-  
+
+        
 
         const mainBannerOptions = {
             items: 1,
@@ -87,53 +195,96 @@ scrollTop()
                 },
             }
         };
-
-        //const startDate = this.state.startDate;
-        const searchArray = ["hilton", "sovotel", "sheraton", "sar"]
+        const startDate = this.state.startDate;
+        var placesArray = []
+        var attractionArray = []
+        var hotelsArray = []
+        var restaurantsArray = []
+        //const searchArray = this.state.places;
+                 
         //this.state.attractions
         const placesHTML = []
-        const resultHTML =[]
+        const resultHTML = []
+
+        if (!this.state.places || !this.state.attractions || !this.state.hotels || !this.state.restaurants) {
+            // resource is not yet loaded
+           // return <div>Loading resource...</div>;
+        }
+        
+        
+       // const placesArray1 = this.state.hotels
         // eslint-disable-next-line 
-        for (let i = 0; i <searchArray.length; i++) {
+      
+            else{
+                placesArray = this.state.places;
+                hotelsArray = this.state.hotels;
+                attractionArray = this.state.attractions;
+                restaurantsArray = this.state.restaurants;
+        for (let i = 0; i <placesArray.length; i++) {
            
             if (i <= 2) {
                 //if there is result in database
                 placesHTML.push(
-                    <a href="#about">
+                      <Link activeClassName="active" to={`${process.env.PUBLIC_URL}/package-details`} >
+                     {/* <a href="">  */}
                         <div class="image-search"><picture>
                             <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
                                 width="100" height="75" alt="">
                             </img>
                         </picture></div>
-                        <div class="description"><div><div class="city-name">{searchArray[i]}</div><div> Paris Centre Gare Montparnasse</div></div><div ><div>Paris, Ile-de-France, France</div></div></div>
-                    </a>
-                )
-            } else {
-                resultHTML.push(
-                    <div className="package-card-xl">
-                        <div className="package-thumb-xl">
-                            <Link to={`${process.env.PUBLIC_URL}/package-details`}>
-                                <img src={pv_1} alt="" className="img-fluid" />
-                            </Link>
-                        </div>
-                        <div className="package-details-xl">
-                            <div className="package-info">
-                                <h5><span>$180</span>/Per Person</h5>
-                            </div>
-                            <h3><i className="flaticon-arrival" />
-                                <Link to={`${process.env.PUBLIC_URL}/package-details`}>Paris Hill Tour</Link>
-                            </h3>
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem saepe amet magni!</p>
-                            <div className="package-rating">
-                                <strong><i className="bx bxs-star" /><span>8K+</span> Rating</strong>
-                            </div>
-                        </div>
-                    </div>
-                )
-            }
+                        <div class="description"><div><div class="city-name">{placesArray[i].name}</div><div>{placesArray[i].city}</div></div></div>
+                        {/* </a>  */}
+                        </Link>
+                )}}
+                for (let i = 0; i <hotelsArray.length; i++) {
            
-        }
-      
+                    if (i <= 2) {
+                        //if there is result in database
+                        placesHTML.push(
+                              <Link activeClassName="active" to={`${process.env.PUBLIC_URL}/package-details`} >
+                             {/* <a href="">  */}
+                                <div class="image-search"><picture>
+                                    <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
+                                        width="100" height="75" alt="">
+                                    </img>
+                                </picture></div>
+                                <div class="description"><div><div class="city-name">{hotelsArray[i].name}</div><div>{hotelsArray[i].city}</div></div></div>
+                                {/* </a>  */}
+                                </Link>
+                        )}}
+                        for (let i = 0; i <attractionArray.length; i++) {
+           
+                            if (i <= 2) {
+                                //if there is result in database
+                                placesHTML.push(
+                                      <Link activeClassName="active" to={`${process.env.PUBLIC_URL}/package-details`} >
+                                     {/* <a href="">  */}
+                                        <div class="image-search"><picture>
+                                            <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
+                                                width="100" height="75" alt="">
+                                            </img>
+                                        </picture></div>
+                                        <div class="description"><div><div class="city-name">{attractionArray[i].name}</div><div>{attractionArray[i].city}</div></div></div>
+                                        {/* </a>  */}
+                                        </Link>
+                                )}}
+                                for (let i = 0; i <restaurantsArray.length; i++) {
+           
+                                    if (i <= 2) {
+                                        //if there is result in database
+                                        placesHTML.push(
+                                              <Link activeClassName="active" to={`${process.env.PUBLIC_URL}/package-details`} >
+                                             {/* <a href="">  */}
+                                                <div class="image-search"><picture>
+                                                    <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
+                                                        width="100" height="75" alt="">
+                                                    </img>
+                                                </picture></div>
+                                                <div class="description"><div><div class="city-name">{restaurantsArray[i].name}</div><div>{restaurantsArray[i].city}</div></div><div ></div></div>
+                                                {/* </a>  */}
+                                                </Link>
+                                        )}}}
+           
             {/* <Link
             to={{
                 pathname: "../search/SearchResults",
@@ -159,7 +310,7 @@ scrollTop()
     return (
         <>
             {/* ===============  Main banner area start =============== */}
-            <div className="main-banner">
+            <div className="main-banner"  >
                 <OwlCarousel className="banner-slider owl-carousel"  {...mainBannerOptions}>
                     <div className="slider-item slider-item-1">
                         <div className="container">
@@ -202,116 +353,53 @@ scrollTop()
             {/* ===============  Main banner area end =============== */}
 
             {/* ===============  findfrom area start ============= */}
-            <div  className="find-form">
+            <div  className="find-form" ref={this.container}>
                 <div className="container">
                     <form id="search"className="findfrom-wrapper">
                         <div className="row">
                             <div className="sidebar-searchbox">
                                 
                            
-                                <div class="dropdown">
+                                <div class="dropdown" >
                                     
-                                <div class="input-group search-box ">
+                                <div class="input-group search-box "ref={this.container}>
                                
-                                    <input type="text" id="name"className="form-control" placeholder="Where To?" aria-label="Recipient's username" aria-describedby="button-addon2" onClick={this.handleClick} />
+                                        <input type="text" name="search" value={this.state.search} id="name" className="form-control" placeholder="Where To?" aria-label="Recipient's username" aria-describedby="button-addon2"
+                                            // onClick={this.handleClick}
+                                            // onClick={this.handleButtonClick}
+                                           
                                      
-                                        <button className="btn btn-outline-secondary " type="button" id="button-addon2" >
+                                            autoComplete="off"
+                                            onKeyPress={(ev) => { this._handleKeyDown(ev) }}
+                                
+                                            onChange={(e) => this.setState({ search: e.target.value })}
+                                          />
+                                     
+                                        <button className="btn btn-outline-secondary " type="button" id="button-addon2"
+                                            //onClick={this.fetchData}
+                                            onClick={() => {
+                                                this.handleButtonClick();
+                                                this.fetchData();
+                                             
+                                              }}>
+                                        
+
                                         {/* {this.state.isToggleOn ? 'ON' : 'OFF'} */}
                                             <i className="bx bx-search" /></button>
                                 </div>
                               
-                                       
+                                {this.state.open && (
                                         <div id="myDropdown" class="dropdown-content">
-                                             <a id="tar" href="#about">
-                                           
-                                                <div class="image-search"><picture>
-                                                    <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
-                                                        width="100" height="75" alt="">
-                                                    </img>
-                                                </picture></div>
-                                                <div class="description"><div><div class="city-name">hhh</div><div> Paris Centre Gare Montparnasse</div></div><div ><div>Paris, Ile-de-France, France</div></div></div>
-                                            </a> 
-                                           
-                                        
 
                                             {placesHTML}
                                             </div>
-                                      
-                                        {/* <a href="#about">
-                                            <div class="image-search"><picture>
-                                                <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
-                                                    width="100" height="75" alt="">
-                                                   </img>
-                                            </picture></div>
-                                            <div class="description"><div><div class="city-name">Novotel</div><div> Paris Centre Gare Montparnasse</div></div><div ><div>Paris, Ile-de-France, France</div></div></div>
-                                        </a>
-                                        <hr ></hr>
-                                        <a href="#about">
-                                            <div class="image-search"><picture>
-                                                <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
-                                                    width="100" height="75" alt="">
-                                                   </img>
-                                            </picture></div>
-                                            <div class="description"><div><div class="city-name">Novotel</div><div> Paris Centre Gare Montparnasse</div></div><div ><div>Paris, Ile-de-France, France</div></div></div>
-                                        </a>
-                                        <hr ></hr>
-                                        <a href="#about">
-                                            <div class="image-search"><picture>
-                                                <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
-                                                    width="100" height="75" alt="">
-                                                   </img>
-                                            </picture></div>
-                                            <div class="description"><div><div class="city-name">Novotel</div><div> Paris Centre Gare Montparnasse</div></div><div ><div>Paris, Ile-de-France, France</div></div></div>
-                                        </a>
-                                        <hr ></hr>
-                                        <a href="#about">
-                                            <div class="image-search"><picture>
-                                                <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
-                                                    width="100" height="75" alt="">
-                                                   </img>
-                                            </picture></div>
-                                            <div class="description"><div><div class="city-name">Novotel</div><div> Paris Centre Gare Montparnasse</div></div><div ><div>Paris, Ile-de-France, France</div></div></div>
-                                        </a>*/}
-                                      
-
-                                     
+                                        )}
+                                                     
                                     
                                 </div>
                                  </div>
                             
-                        {/* <div className="main-searchbar activeSearch">
-                            <input type="text" placeholder="Search Here......" />
-                            <div className="searchbar-icon">
-                                <i className="bx bx-search" />
-                            </div>
-                        </div> */}
-                
-                            {/* <div className="col-lg-3">
-                                <input type="text" name="whereto" placeholder="Where To..." />
-                            </div>
-                            <div className="col-lg-3">
-                                <div className="calendar-input">
-                                    <DatePicker selected={startDate} onChange={(date) => this.changeDatepickerHandeller(date)}  className="input-field check-in" placeholder="dd-mm-yy"/>
-                                    <i className="flaticon-calendar" />
-                                </div>
-                            </div>
-                            <div className="col-lg-3">
-                                <div className="custom-select">
-                                    <select>
-                                        <option value={0}>Travel Type</option>
-                                        <option value={1}>City Tours</option>
-                                        <option value={2}>Vacation Tours</option>
-                                        <option value={3}>Couple Tours </option>
-                                        <option value={4}>Adventure Tours</option>
-                                        <option value={5}>Group Tours</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="col-lg-3">
-                                <div className="find-btn">
-                                    <Link to={`#`} className="btn-second"><i className="bx bx-search-alt" /> Find now</Link>
-                                </div>
-                            </div> */}
+                       
                         </div>
                     </form>
                 </div>

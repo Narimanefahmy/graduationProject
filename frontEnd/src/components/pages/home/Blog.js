@@ -14,8 +14,10 @@ class Blog extends Component {
     this.state = {
 
     };
-  }
-  render() {
+    }
+    
+    render() {
+
     return (
        <>
            {/* ===============  Blog area start =============== */}
