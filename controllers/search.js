@@ -35,9 +35,9 @@ class Search{
              return {name,type};
  
            })];  
-           restaurantsArray=await restaurantsModel.find({name :{$regex: search_field, $options: "i"}} ," name type").exec();
-           restaurantsArray = [...restaurantsArray.map(({name,type})=> {
-              return {name,type}})];
+           restaurantsArray=await restaurantsModel.find({city :{$regex: search_field, $options: "i"}} ," name type").exec();
+           restaurantsArray = [...restaurantsArray.map(({name,city})=> {
+              return {name,city}})];
          
  
           res.json({
