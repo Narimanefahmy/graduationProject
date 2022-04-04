@@ -10,11 +10,11 @@ const getUser = require('./controllers/getUser');
 const refreshtoken = require('./controllers/refreshtoken'); 
 const verifytoken = require('./middlewear/verifytoken')
 const { collectData } = require('./controllers/collectData');
-var cookieParser = require('cookie-parser');
+//var cookieParser = require('cookie-parser');
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-app.use(cookieParser())
+//app.use(cookieParser())
 app.use(cors())
 
 app.get('/users',verifytoken.verifyToken,getUser.getUsers)//get all users

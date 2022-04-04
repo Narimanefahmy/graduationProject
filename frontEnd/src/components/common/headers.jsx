@@ -3,9 +3,144 @@ import {Link,NavLink}               from "react-router-dom";
 
 //Import Image
 import logoMain             from "../../assets/images/logo.png"
-import secondLogo           from "../../assets/images/logo-2.png"
+import secondLogo from "../../assets/images/logo-2.png"
 
 class Headers extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false,
+            search: null,
+            places: null,
+            hotels: null,
+            attraction: null,
+            restaurant: null,
+        };
+    }
+    
+    removeLastSearch() {
+        this.setState({
+            search: ""
+        });
+  }
+    
+    
+    fetchHotel() {
+   
+        fetch('http://localhost:8000/search', {
+            method: "POST",
+            body: JSON.stringify({
+                search: this.state.search
+            }),
+            headers: {
+
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
+            .then(response => response.json())
+        
+            .then(data => {
+                console.table(data.hotels)
+               
+            this.setState({
+                    
+                hotels: data.hotels,
+                attraction: null,
+            }); 
+    
+        });    
+    }
+    fetchRestaurant() {
+        fetch('http://localhost:8000/search', {
+            method: "POST",
+            body: JSON.stringify({
+                search: this.state.search
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
+            .then(response => response.json())
+        
+            .then(data => {
+               
+                this.setState({
+                    restaurant: data.restaurant,
+                    hotels: null,
+                    attraction:null
+
+            }); 
+
+        });     
+    }
+
+    fetchAttraction() {
+        fetch('http://localhost:8000/search', {
+            method: "POST",
+            body: JSON.stringify({
+                search: this.state.search
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
+            .then(response => response.json())
+        
+            .then(data => {
+               
+                this.setState({
+                    attraction: data.attraction,
+                    hotels: null,
+                    restaurant:null,
+               
+
+            }); 
+        });     
+    }
+   
+
+    container = React.createRef();
+   
+    
+    
+    _handleKeyDown = (ev) => {
+        if (ev.key === "Enter") {
+            ev.preventDefault();
+            window.location.replace("../search/SearchResults");
+          }
+    }
+    handleButtonClick = () => {
+        if (this.state.open===false) {
+            this.setState((state) => {
+            
+                return {
+                    open: !state.open,
+                };
+            });
+        };
+    }
+
+    handleClickOutside = (event) => {
+        if (
+          this.container.current &&
+          !this.container.current.contains(event.target)
+        ) {
+          this.setState({
+            open: false,
+          });
+        }
+        
+        
+        }
+   
+   
+  
+    componentDidMount() {
+        document.addEventListener("mousedown", this.handleClickOutside);
+    }
+    componentWillUnmount() {
+      document.removeEventListener("mousedown", this.handleClickOutside);
+    }
     scrollTop()
     {
         window.scrollTo({
@@ -13,66 +148,128 @@ class Headers extends Component {
             behavior: "smooth"
         });
     }
-   
+    removeGeneralSearch()
+    {
+        document.getElementById("search").style.display = "none";
+    }
     render() {
        
-       
+        var attractionArray = []
+        var hotelsArray = []
+        var restaurantsArray = []
+        const placesHTML = []
+    
+        if (this.state.hotels != null) {
+            if (!this.state.hotels) {
+
+           
+            }
+            else {
+                hotelsArray = this.state.hotels;
+              
+                if (hotelsArray.length < 1) {
+                    placesHTML.push(
+                        placesHTML.push(<div class="no-result2" >No results found</div>)
+                    )
+                }
+                for (let i = 0; i < hotelsArray.length; i++) {
+           
+                        placesHTML.push(
+                          
+                            <a href={`${process.env.PUBLIC_URL}/package-details`}>
+                                <div class="image-search"><picture>
+                                    <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
+                                        width="100" height="70" alt="">
+                                    </img>
+                                </picture></div>
+                                <div class="description"><div><div class="city-name">{hotelsArray[i].name}</div><div>{hotelsArray[i].city}</div></div></div>
+                            </a>
+                                
+                        )
+                }
+                 
+                placesHTML.push(
+                    <NavLink activeClassName="active" to={`${process.env.PUBLIC_URL}/search`} onClick={this.scrollTop} >see all results</NavLink>
+                )
+              
+         
+                }
+            
+        } if (this.state.attraction != null) {
+           
+                if (!this.state.attraction) {
+                }
+                else {
+                    attractionArray = this.state.attraction;
+               
+                    if (attractionArray.length < 1) {
+                        placesHTML.push(
+                            placesHTML.push(<div class="no-result2" >No results found</div>)
+                        )
+                    }
+                    for (let i = 0; i < attractionArray.length; i++) {
+        
+ 
+                        placesHTML.push(
+                          
+                            <a href={`${process.env.PUBLIC_URL}/package-details`}>
+                                <div class="image-search"><picture>
+                                    <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
+                                        width="100" height="70" alt="">
+                                    </img>
+                                </picture></div>
+                                <div class="description"><div><div class="city-name">{attractionArray[i].name}</div><div>{attractionArray[i].city}</div></div></div>
+                            </a>
+                                
+                        )
+                        
+                    }
+                    placesHTML.push(
+                        <NavLink activeClassName="active" to={`${process.env.PUBLIC_URL}/search`} onClick={this.scrollTop} >see all results</NavLink>
+                    )
+                
+                }
+            }
+        
+         if (this.state.restaurant != null) {
+          
+                if (!this.state.restaurant) {
+                }
+                else {
+                    restaurantsArray = this.state.restaurant;
+                    if (restaurantsArray.length < 1) {
+                        placesHTML.push(
+                            placesHTML.push(<div class="no-result2" >No results found</div>)
+                        )
+                    }
+            
+                    for (let i = 0; i < restaurantsArray.length; i++) {
+                        placesHTML.push(
+                          
+                            <a href={`${process.env.PUBLIC_URL}/package-details`}>
+                                <div class="image-search"><picture>
+                                    <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
+                                        width="100" height="70" alt="">
+                                    </img>
+                                </picture></div>
+                                <div class="description"><div><div class="city-name">{restaurantsArray[i].name}</div><div>dwlfk</div></div></div>
+                            </a>
+                                
+                        )
+                        
+                    }
+                    placesHTML.push(
+                        <NavLink activeClassName="active" to={`${process.env.PUBLIC_URL}/search`} onClick={this.scrollTop} >see all results</NavLink>
+                    )
+                
+                }
+            }
+        
+            
+           
+                        
         return (
             <>
-                {/* =============== Topbar area start =============== */}
-            {/* <div className="topbar-area">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-5 col-md-5 tob-contact-row">
-                            <div className="topbar-contact">
-                                <ul>
-                                    <li>
-                                        <i className="bx bxs-phone" />
-                                        <a href="tel:+17632275032">+1 763-227-5032</a>
-                                    </li>
-
-                                    <li>
-                                        <i className="bx bxs-envelope" />
-                                        <a href="mailto:info@example.com">info@example.com</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-md-6 col-sm-6 col-xs-6 col-6">
-                            <div className="topbar-social">
-                                <ul>
-                                    <li>
-                                        <Link to={"#"}><i className="bx bxl-instagram" /></Link>
-                                    </li>
-                                    <li>
-                                        <Link to={"#"}><i className="bx bxl-facebook" /></Link>
-                                    </li>
-                                    <li>
-                                        <Link to={"#"}><i className="bx bxl-twitter" /></Link>
-                                    </li>
-                                    <li>
-                                        <Link to={"#"}><i className="bx bxl-whatsapp" /></Link>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6 col-sm-6 col-xs-6 col-6">
-                            <div className="custom-select languege-select">
-                                <select>
-                                    <option value={0}>ENG</option>
-                                    <option value={1}>BAN</option>
-                                    <option value={2}>FSP</option>
-                                    <option value={3}>CHI</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
-
-            {/* =============== Topbar area end =============== */}
-
-
             {/* ===============  header area start =============== */}
             <header>
                 <div className="header-area">
@@ -87,29 +284,7 @@ class Headers extends Component {
                                          <div className="searchbar-open"> 
                                             <i className="flaticon-magnifier" />
                                       </div> 
-                                        {/* <div className="user-dropdown-icon">
-                                            <i className="flaticon-user" />
-                                            <div className="account-dropdown">
-                                                <ul>
-                                                    <li className="account-el">
-                                                        <i className="bx bx-user-pin" />
-                                                        <Link to={"#"}>Sign in</Link>
-                                                    </li>
-                                                    <li className="account-el">
-                                                        <i className="bx bxs-user-account" />
-                                                        <Link to={"#"}>My Account</Link>
-                                                    </li>
-                                                    <li className="account-el">
-                                                        <i className="bx bx-extension" />
-                                                        <Link to={"#"}>Settings</Link>
-                                                    </li>
-                                                    <li className="account-el">
-                                                        <i className="bx bx-log-in-circle" />
-                                                        <Link to={"#"}>Log out</Link>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div> */}
+                                       
                                         <div className="mobile-menu d-flex ">
                                             <div className="top-search-bar m-0 d-block d-xl-none">
                                             </div>
@@ -128,32 +303,49 @@ class Headers extends Component {
                                         <img src={secondLogo} alt="" className="img-fluid" />
                                     </div>
                                     <ul>
-                                        <li>
+                                            <li
+                                                 
+                                                onClick={() => {
+                                                    this.removeGeneralSearch(); 
+                                                    this.removeLastSearch();
+                                                } }>
                                         <span className="searchbar-open">
                                             <i><span class="span-search">Hotels
-                                         </span></i></span>
-                                        </li>
-                                        <li> 
-                                        <span className="searchbar-open">
+                                                    </span></i>
+                                                </span>
+                                            </li>
+                                            
+                                        <li onClick={() => {
+                                                    this.removeGeneralSearch();
+                                                    this.removeLastSearch();
+                                                   
+
+                                                } }> 
+                                        <span className="searchbar-open2">
                                             <i><span class="span-search">Restaurants
                                                 </span></i></span>
                                               
                                              
                                         </li>
-                                        <li>
+                                        <li onClick={this.removeGeneralSearch} >
                                         <span className="searchbar-open">
                                             <i><span class="span-search">Rent car
                                                 </span></i></span>
                                               
                                         </li>
-                                        <li>
+                                        <li onClick={() => {
+                                                    this.removeGeneralSearch();
+                                                    this.removeLastSearch();
+                                                   
+
+                                                } }>
                                         <span className="searchbar-open">
                                             <i><span class="span-search">Flights
                                                 </span></i></span>
                                               
                                         </li>
-                                        <li >
-                                        <span className="searchbar-open">
+                                        <li onClick={this.removeGeneralSearch} >
+                                        <span className="searchbar-open3">
                                             <i><span class="span-search">Attractions
                                                 </span></i></span>
                                               
@@ -179,7 +371,7 @@ class Headers extends Component {
                                                 </li>
                                             </ul>
                                         </li> */}
-                                        <li>
+                                        <li onClick={this.removeGeneralSearch} >
                                         <span className="searchbar-open">
                                             <i><span class="span-search">Tour Guide 
                                                 </span></i></span>
@@ -234,18 +426,88 @@ class Headers extends Component {
                             </div>
                         </div>
                     </div>
-
-                    <form>
+<div ref={this.container}>
+                        <form>
+                     
                         <div className="main-searchbar">
-                            <div className="searchbar-close">    
+                                <div className="searchbar-close">       
                             </div>
-                            <input type="text" placeholder="Search Here......" />
-                            <div className="searchbar-icon">
-                                <i className="bx bx-search" />
-                            </div>
-                        </div>
+                                <input id="input" type="text" placeholder="Search Hotel......" name="search" value={this.state.search}
+                                    onChange={(e) => this.setState({ search: e.target.value })}
+                                    autoComplete="off"
+                                    onKeyPress={(ev) => { this._handleKeyDown(ev)}}/>
+                            <div className="searchbar-icon" >
+                                    <i className="bx bx-search"
+                                         onClick={() => {
+                                            this.handleButtonClick();
+                                            this.fetchHotel();
+                                        }}
+                                        
+                                          autoComplete="off"
+                                          onKeyPress={(ev) => { this._handleKeyDown(ev)}}/>
+                                    </div>{this.state.open && (
+                            <div  class="dropdown-conten" >
+                                  {placesHTML}
+                                    </div>  
+                                        )}
+                                </div>
+                             
                     </form>
-
+                        <form>
+                        <div className="main-searchbar2" >
+                            <div className="searchbar-close2">    
+                            </div>
+                                    <input type="text" placeholder="Search Restaurant......" name="search"
+                                    value={this.state.search}
+                                    onChange={(e) => this.setState({ search: e.target.value })}
+                                    autoComplete="off"
+                                    onKeyPress={(ev) => { this._handleKeyDown(ev)}}/>
+                            <div className="searchbar-icon">
+                                    <i className="bx bx-search"
+                                         onClick={() => {
+                                            this.handleButtonClick();
+                                            this.fetchRestaurant();           
+                                          }}
+                                                  />
+                            </div>
+                            {this.state.open && (
+                            <div id="Dropdown" class="dropdown-conten">
+                                  {placesHTML}
+                                    </div>  
+                                     )}
+                                </div>
+                                
+                            </form>
+                           
+                        <form>
+                      
+                        <div className="main-searchbar3">
+                            <div className="searchbar-close3">    
+                            </div>
+                                <input type="text" placeholder="Search Attraction......"
+                                    name="search"
+                                    value={this.state.search}
+                                    onChange={(e) => this.setState({ search: e.target.value })}
+                                    autoComplete="off"
+                                    onKeyPress={(ev) => { this._handleKeyDown(ev)}}/>
+                           
+                            <div className="searchbar-icon">
+                                    <i className="bx bx-search"
+                                         onClick={() => {
+                                            this.handleButtonClick();
+                                            this.fetchAttraction();
+                                          }}
+                                                  />
+                            </div>
+                            {this.state.open && (
+                            <div id="Dropdown" class="dropdown-conten">
+                                  {placesHTML}
+                                    </div>  
+                                     )}
+                                </div>
+                                
+                    </form>
+ </div>
                 </div>
             </header>
             {/* ===============  header area end =============== */}

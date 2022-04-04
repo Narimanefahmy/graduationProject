@@ -133,9 +133,15 @@ class Footers extends Component {
             });
 
             // Search Bar js
-            var searchOpen = document.querySelectorAll('.searchbar-open i')
+            var searchOpen =  document.querySelectorAll('.searchbar-open i')
             var searchCard = document.querySelectorAll('.main-searchbar')
             var searchClose = document.querySelectorAll('.searchbar-close i')
+            var searchCard2 = document.querySelectorAll('.main-searchbar2')
+            var searchOpen2 = document.querySelectorAll('.searchbar-open2 i')
+            var searchClose2 =document.querySelectorAll('.searchbar-close2 i')
+            var searchCard3 = document.querySelectorAll('.main-searchbar3')
+            var searchOpen3 = document.querySelectorAll('.searchbar-open3 i')
+            var searchClose3 =document.querySelectorAll('.searchbar-close3 i')
 
             searchOpen.forEach((el)=>{
                 el.addEventListener('click',()=>{
@@ -144,9 +150,38 @@ class Footers extends Component {
                     })
                 })
             })
+            searchOpen2.forEach((el)=>{
+                el.addEventListener('click',()=>{
+                    searchCard2.forEach((el)=>{
+                        el.classList.add('activeSearch')
+                    })
+                })
+            })
+            searchOpen3.forEach((el)=>{
+                el.addEventListener('click',()=>{
+                    searchCard3.forEach((el)=>{
+                        el.classList.add('activeSearch')
+                    })
+                })
+            })
             searchClose.forEach((el)=>{
                 el.addEventListener('click',()=>{
                     searchCard.forEach((el)=>{
+                        el.classList.remove('activeSearch')
+                       
+                    })
+                })
+            });
+            searchClose2.forEach((el)=>{
+                el.addEventListener('click',()=>{
+                    searchCard2.forEach((el)=>{
+                        el.classList.remove('activeSearch')
+                    })
+                })
+            });
+            searchClose3.forEach((el)=>{
+                el.addEventListener('click',()=>{
+                    searchCard3.forEach((el)=>{
                         el.classList.remove('activeSearch')
                     })
                 })
@@ -156,8 +191,22 @@ class Footers extends Component {
                 searchCard.forEach((el)=>{
                     if(event.target === el){
                         el.classList.remove('activeSearch')
+                        document.getElementById('search').style.display = "block"
+                    
+                       
                     }
                 });
+                searchCard2.forEach((el)=>{
+                            if(event.target === el){
+                               el.classList.remove('activeSearch')
+                    }
+                });
+                searchCard3.forEach((el)=>{
+                            if(event.target === el){
+                               el.classList.remove('activeSearch')
+                    }
+                });
+               
                 if(!event.target.matches('.user-dropdown-icon i')){
                     accountCard.forEach((element)=>{
                         if(element.classList.contains('activeCard')){

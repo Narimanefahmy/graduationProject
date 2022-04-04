@@ -5,10 +5,6 @@ import "owl.carousel/dist/assets/owl.theme.default.css";
 import "react-datepicker/dist/react-datepicker.css";
 import {Link,NavLink} from "react-router-dom";
 import pv_1 from "../../../assets/images/package/pv-1.png"
-// import SearchResults from "../search/SearchResults";
-import PackageDetails from "../package/PackageDetails";
-import { useState } from 'react';
-
 
 
 class MainBanner extends Component {
@@ -48,38 +44,15 @@ class MainBanner extends Component {
             });
             
             console.table(this.state.hotels) 
-            console.table(this.state.places) 
-
-            //console.table(this.state.search)
+        console.table(this.state.places) 
+        console.table(this.state.restaurants)
     }
-
-//     fetchData2() {
-//         fetch('http://localhost:8000/search')
-//             .then(response => response.json())
-//         .then(data => {
-//             this.setState({
-//           places: data.placesArray,
-//           hotels: data.HotelsArray,
-//           attractions: data.attractionsArray,
-//           restaurants: data.restaurantsArray });
-//         });
-//         console.table(this.state.places) 
-//   }
-     
-    //   this.handleClick = this.handleClick.bind(this);
-    //   this.state = {
-    //     count: 0
-    // this.state = {
-    //     startDate: new Date(),
-              
-    
-
 
     container = React.createRef();
     _handleKeyDown = (ev) => {
         if (ev.key === "Enter") {
             ev.preventDefault();
-            // window.location.replace("../search/SearchResults");
+            window.location.replace("../search/SearchResults");
         }
           console.table(this.state.search);
     }
@@ -95,15 +68,6 @@ class MainBanner extends Component {
         };
     }
     
-//     handleClick() {
-      
-//       document.getElementById("myDropdown").classList.toggle("show");
-   
-// //      // var checkInput = document.getElementById("name");
-// //     //   if (checkInput.value) {
-// //     //       document.getElementById("tar").style.display = "none";
-// //     //   }
-//     }
 
     handleClickOutside = (event) => {
         if (
@@ -121,12 +85,10 @@ class MainBanner extends Component {
 //     }
 
 
-    componentDidMount() {
-     
-        //this.fetchData2();
-        document.addEventListener("mousedown", this.handleClickOutside);
-        
-}
+componentDidMount() {
+        document.addEventListener("mousedown", this.handleClickOutside);      
+    }
+    
 componentWillUnmount() {
   document.removeEventListener("mousedown", this.handleClickOutside);
 }
@@ -138,25 +100,6 @@ scrollTop()
         behavior: "smooth"
     });
     }
-// data = (users) => {
-//     <div className="viewusers">
-//          <h1>All users</h1>
-//          <div className="viewusers-list">
-//              {users.map((user) => {
-//                  return (
-//                  <React.Fragment>
-//                      <p> <b>Name</b> : {user.username} </p>
-//                      <p> <b>Email</b> : {user.email} </p>
-//                      <p> <b>Website role</b> : {user.websiteRole} </p>
-//                      <hr />
-//                  </React.Fragment>
-//                  )
-//              })}
-//          </div>
-//      </div>
-// }
-
-
 
     
     render() {
@@ -195,141 +138,113 @@ scrollTop()
                 },
             }
         };
-        const startDate = this.state.startDate;
+       // const startDate = this.state.startDate;
         var placesArray = []
         var attractionArray = []
         var hotelsArray = []
         var restaurantsArray = []
-        //const searchArray = this.state.places;
-                 
-        //this.state.attractions
         const placesHTML = []
-        const resultHTML = []
 
         if (!this.state.places || !this.state.attractions || !this.state.hotels || !this.state.restaurants) {
-            // resource is not yet loaded
-           // return <div>Loading resource...</div>;
         }
-        
-        
-       // const placesArray1 = this.state.hotels
-        // eslint-disable-next-line 
-      
             else{
                 placesArray = this.state.places;
                 hotelsArray = this.state.hotels;
                 attractionArray = this.state.attractions;
-                restaurantsArray = this.state.restaurants;
+            restaurantsArray = this.state.restaurants;
+         placesHTML.push(<div class="search-header"><i class="icon-search-header" className="flaticon-arrival" />Places</div>)
         for (let i = 0; i <placesArray.length; i++) {
            
             if (i <= 2) {
                 //if there is result in database
                 placesHTML.push(
-                      <Link activeClassName="active" to={`${process.env.PUBLIC_URL}/package-details`} >
-                     {/* <a href="">  */}
+                  
+                      <a href={`${process.env.PUBLIC_URL}/package-details`}> 
                         <div class="image-search"><picture>
                             <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
-                                width="100" height="75" alt="">
+                                width="100" height="70" alt="">
                             </img>
                         </picture></div>
-                        <div class="description"><div><div class="city-name">{placesArray[i].name}</div><div>{placesArray[i].city}</div></div></div>
-                        {/* </a>  */}
-                        </Link>
-                )}}
-                for (let i = 0; i <hotelsArray.length; i++) {
+                        <div class="description"><div><div class="city-name">{placesArray[i].name}</div><div> {placesArray[i].type}</div></div></div>
+                         </a>  
+                        
+                    )
+                }
+            }
+           
+            for (let i = 0; i < hotelsArray.length; i++) {
+                if (i == 0)
+                {
+                    placesHTML.push(<div class="search-header"><i class="icon-search-header" className="flaticon-arrival" />Hotels</div>)
+                        }
            
                     if (i <= 2) {
-                        //if there is result in database
+ 
                         placesHTML.push(
-                              <Link activeClassName="active" to={`${process.env.PUBLIC_URL}/package-details`} >
-                             {/* <a href="">  */}
+                          
+                            <a href={`${process.env.PUBLIC_URL}/package-details`}> 
                                 <div class="image-search"><picture>
                                     <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
-                                        width="100" height="75" alt="">
+                                        width="100" height="70" alt="">
                                     </img>
                                 </picture></div>
                                 <div class="description"><div><div class="city-name">{hotelsArray[i].name}</div><div>{hotelsArray[i].city}</div></div></div>
-                                {/* </a>  */}
-                                </Link>
+                                </a> 
+                                
                         )}}
-                        for (let i = 0; i <attractionArray.length; i++) {
+            for (let i = 0; i < attractionArray.length; i++) {
+                if (i == 0)
+                {
+                    placesHTML.push(<div class="search-header"><i class="icon-search-header" className="flaticon-arrival" />Attractions</div>)
+                        }
            
                             if (i <= 2) {
-                                //if there is result in database
+            
                                 placesHTML.push(
-                                      <Link activeClassName="active" to={`${process.env.PUBLIC_URL}/package-details`} >
-                                     {/* <a href="">  */}
+                                   
+                                     <a href={`${process.env.PUBLIC_URL}/package-details`}> 
                                         <div class="image-search"><picture>
                                             <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
                                                 width="100" height="75" alt="">
                                             </img>
                                         </picture></div>
                                         <div class="description"><div><div class="city-name">{attractionArray[i].name}</div><div>{attractionArray[i].city}</div></div></div>
-                                        {/* </a>  */}
-                                        </Link>
+                                        </a> 
+                                      
                                 )}}
-                                for (let i = 0; i <restaurantsArray.length; i++) {
+            for (let i = 0; i < restaurantsArray.length; i++) {
+                if (i == 0)
+                {
+                    placesHTML.push(<div class="search-header"><i class="icon-search-header" className="flaticon-arrival" />Restaurants</div>)
+                        }
            
                                     if (i <= 2) {
-                                        //if there is result in database
+                                  
                                         placesHTML.push(
-                                              <Link activeClassName="active" to={`${process.env.PUBLIC_URL}/package-details`} >
-                                             {/* <a href="">  */}
+                                         
+                                           <a href={`${process.env.PUBLIC_URL}/package-details`}> 
                                                 <div class="image-search"><picture>
                                                     <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
                                                         width="100" height="75" alt="">
                                                     </img>
                                                 </picture></div>
-                                                <div class="description"><div><div class="city-name">{restaurantsArray[i].name}</div><div>{restaurantsArray[i].city}</div></div><div ></div></div>
-                                                {/* </a>  */}
-                                                </Link>
+                                                <div class="description"><div><div class="city-name">{restaurantsArray[i].name}</div><div>{restaurantsArray[i].type}</div></div></div>
+                                                </a> 
+                                             
                                         )}}}
-            // } else {
-            //     resultHTML.push(
-            //         <div className="package-card-xl">
-            //             <div className="package-thumb-xl">
-            //                 <Link to={`${process.env.PUBLIC_URL}/package-details`}>
-            //                     <img src={pv_1} alt="" className="img-fluid" />
-            //                 </Link>
-            //             </div>
-            //             <div className="package-details-xl">
-            //                 <div className="package-info">
-            //                     <h5><span>$180</span>/Per Person</h5>
-            //                 </div>
-            //                 <h3><i className="flaticon-arrival" />
-            //                     <Link to={`${process.env.PUBLIC_URL}/package-details`}>Paris Hill Tour</Link>
-            //                 </h3>
-            //                 <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem saepe amet magni!</p>
-            //                 <div className="package-rating">
-            //                     <strong><i className="bx bxs-star" /><span>8K+</span> Rating</strong>
-            //                 </div>
-            //             </div>
-            //         </div>
-            //     )
-            // }
-           
-        
-      
-            {/* <Link
-            to={{
-                pathname: "../search/SearchResults",
-                data: resultHTML // your data array of objects
-            }}
-        </Link> */}
-        placesHTML.push(
-            <NavLink activeClassName="active" to={`${process.env.PUBLIC_URL}/search`} onClick={this.scrollTop} >see all results</NavLink>
-        )
-        resultHTML.push(
-            <NavLink activeClassName="active" to={`${process.env.PUBLIC_URL}/search`} onClick={this.scrollTop} >see all results</NavLink> 
-        )
-
-        // if (this.state.isWritten) {
-         
-        // if (document.getElementById("name").value)
-        // {
-        //     return null;
             
-        //     }
+      
+        if (placesArray.length < 1 && restaurantsArray.length < 1 && hotelsArray.length < 1 && attractionArray.length < 1) {
+            placesHTML.push(<div class="no-result" >No results found</div>)
+        }
+        else {
+            placesHTML.push(
+                <NavLink activeClassName="active" to={`${process.env.PUBLIC_URL}/search`} onClick={this.scrollTop} >see all results</NavLink>
+            )
+
+        }
+
+      
         
        
     return (
@@ -390,10 +305,7 @@ scrollTop()
                                 <div class="input-group search-box "ref={this.container}>
                                
                                         <input type="text" name="search" value={this.state.search} id="name" className="form-control" placeholder="Where To?" aria-label="Recipient's username" aria-describedby="button-addon2"
-                                            // onClick={this.handleClick}
-                                            // onClick={this.handleButtonClick}
-                                           
-                                     
+                                            
                                             autoComplete="off"
                                             onKeyPress={(ev) => { this._handleKeyDown(ev) }}
                                 
@@ -401,15 +313,13 @@ scrollTop()
                                           />
                                      
                                         <button className="btn btn-outline-secondary " type="button" id="button-addon2"
-                                            //onClick={this.fetchData}
+                                      
                                             onClick={() => {
                                                 this.handleButtonClick();
                                                 this.fetchData();
                                              
                                               }}>
                                         
-
-                                        {/* {this.state.isToggleOn ? 'ON' : 'OFF'} */}
                                             <i className="bx bx-search" /></button>
                                 </div>
                               

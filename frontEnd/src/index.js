@@ -32,7 +32,8 @@ import signIn                           from "./components/pages/registeration/S
 import typeOfUser                       from "./components/pages/registeration/TypeOfUser";
 import tourist                          from "./components/pages/registeration/Tourist";
 import tourGuide                        from "./components/pages/registeration/TourGuide";
-import admin                            from "./components/pages/registeration/Admin";
+import admin from "./components/pages/registeration/Admin";
+import SearchResults from "./components/pages/search/SearchResults";
 //Initializations All Css
 import './index.css';
 import './index.scss';
@@ -75,6 +76,7 @@ class Root extends React.Component{
                             <Route path={`${process.env.PUBLIC_URL}/tourist`} component={tourist} />
                             <Route path={`${process.env.PUBLIC_URL}/tourGuide`} component={tourGuide} />
                             <Route path={`${process.env.PUBLIC_URL}/admin`} component={admin} />
+                            <Route path={`${process.env.PUBLIC_URL}/search`} component={SearchResults} />
                         </Layout>
                     </Switch>
             </BrowserRouter>
