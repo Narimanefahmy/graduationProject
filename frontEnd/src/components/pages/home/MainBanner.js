@@ -93,6 +93,7 @@ componentWillUnmount() {
   document.removeEventListener("mousedown", this.handleClickOutside);
 }
     
+
 scrollTop()
 {
     window.scrollTo({
@@ -101,7 +102,16 @@ scrollTop()
     });
     }
 
+// parseArray(array) {
+//     var parsed;
+//         array = [...array.map((obj) => {
+//             obj.images = JSON.parse(obj.images.replaceAll(`'`, `"`))
+//             parsed = JSON.parse(obj.images);
+//             console.log(parsed);
     
+//             return obj;
+//         })];
+//     }    
     render() {
        
 
@@ -149,6 +159,7 @@ scrollTop()
         }
             else{
                 placesArray = this.state.places;
+                // this.parseArray(placesArray);
                 hotelsArray = this.state.hotels;
                 attractionArray = this.state.attractions;
             restaurantsArray = this.state.restaurants;
@@ -161,7 +172,7 @@ scrollTop()
                   
                       <a href={`${process.env.PUBLIC_URL}/package-details`}> 
                         <div class="image-search"><picture>
-                            <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
+                        <img src={placesArray[i].images[1]}
                                 width="100" height="70" alt="">
                             </img>
                         </picture></div>
@@ -184,7 +195,7 @@ scrollTop()
                           
                             <a href={`${process.env.PUBLIC_URL}/package-details`}> 
                                 <div class="image-search"><picture>
-                                    <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
+                                    <img src={hotelsArray[i].images[1]}
                                         width="100" height="70" alt="">
                                     </img>
                                 </picture></div>
@@ -204,7 +215,7 @@ scrollTop()
                                    
                                      <a href={`${process.env.PUBLIC_URL}/package-details`}> 
                                         <div class="image-search"><picture>
-                                            <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
+                                        <img src={attractionArray[i].images[1]}
                                                 width="100" height="75" alt="">
                                             </img>
                                         </picture></div>
@@ -224,11 +235,11 @@ scrollTop()
                                          
                                            <a href={`${process.env.PUBLIC_URL}/package-details`}> 
                                                 <div class="image-search"><picture>
-                                                    <img srcset="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=100&amp;h=-1&amp;s=1 1x,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/10/e1/d3/guest-room.jpg?w=200&amp;h=-1&amp;s=1 2x"
+                                                <img src={restaurantsArray[i].images[1]}
                                                         width="100" height="75" alt="">
                                                     </img>
                                                 </picture></div>
-                                                <div class="description"><div><div class="city-name">{restaurantsArray[i].name}</div><div>{restaurantsArray[i].type}</div></div></div>
+                                                <div class="description"><div><div class="city-name">{restaurantsArray[i].name}</div><div>{restaurantsArray[i].city}</div></div></div>
                                                 </a> 
                                              
                                         )}}}

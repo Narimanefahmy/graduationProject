@@ -14,31 +14,49 @@ var attractionsArray = []
 var placesArray=[]
 var restaurantsArray=[]
 class Search{
+  
+  parseArray(array) {
+    array = [...array.map((obj) => {
+        obj.images = JSON.parse(obj.images.replaceAll(`'`, `"`))
+        console.log(obj.images);
+
+        return obj;
+    })];
+}
+
    search = async(req, res, next) => {
     try {
       const search_field  = req.body.search;
      
-        HotelsArray = await hotelsModel.find({name :{$regex: search_field, $options: "i"}} ,"city name").exec();
-         HotelsArray = [...HotelsArray.map(({name,city})=> {
-            return {name,city};
+        HotelsArray = await hotelsModel.find({name :{$regex: search_field, $options: "i"}} ,"city name images ").exec();
+         HotelsArray = [...HotelsArray.map(({name,images,city})=> {
+            return {name,images,city};
 
           })];  
-        //console.log(HotelsArray);
+          parseArray(HotelsArray) 
+          // console.log(HotelsArray)
+          
+
         //res.json(HotelsArray);
-        attractionsArray = await attractionsModel.find({name :{$regex: search_field, $options: "i"}} ,"city name").exec();
-         attractionsArray = [...attractionsArray.map(({name,city})=> {
-            return {name,city};
+        attractionsArray = await attractionsModel.find({name :{$regex: search_field, $options: "i"}} ,"city name images").exec();
+         attractionsArray = [...attractionsArray.map(({name,images,city})=> {
+            return {name,images,city};
 
           })];  
-          placesArray=await placesModel.find({name :{$regex: search_field, $options: "i"}} ," name type").exec();
-          placesArray = [...placesArray.map(({name,type})=> {
-             return {name,type};
+           parseArray(attractionsArray) 
+
+          placesArray=await placesModel.find({name :{$regex: search_field, $options: "i"}} ," name type images").exec();
+          placesArray = [...placesArray.map(({name,images,type})=> {
+             return {name,images,type};
  
-           })];  
-           restaurantsArray=await restaurantsModel.find({city :{$regex: search_field, $options: "i"}} ," name type").exec();
-           restaurantsArray = [...restaurantsArray.map(({name,city})=> {
-              return {name,city}})];
-         
+           })]; 
+            parseArray(placesArray) 
+
+           restaurantsArray=await restaurantsModel.find({city :{$regex: search_field, $options: "i"}} ," name city images").exec();
+           restaurantsArray = [...restaurantsArray.map(({name,images,city})=> {
+              return {name,images,city}})];
+           parseArray(restaurantsArray) 
+
  
           res.json({
             attraction :attractionsArray,
