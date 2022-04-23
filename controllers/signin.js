@@ -3,8 +3,11 @@ const crypto = require('crypto')
 const jwt = require('jsonwebtoken');
 
 const userModel = require('../database_seeds/models/user');
+const { refreshToken } = require('./refreshtoken');
 const mongoosePort = require('../env_variables/env_vars.json').mongoosePort;
-const KEY = require('../env_variables/env_vars.json').KEY;
+const KeyAccess= require('../env_variables/env_vars.json').KeyAccess;
+const Keyrefresh= require('../env_variables/env_vars.json').Keyrefresh;
+var accessToken;
 
 mongoose.connect(mongoosePort)
 
@@ -18,10 +21,24 @@ signin = (req, res) => {
                 res.json("notFound!")
         } else {
             var user = docs[0];
-            jwt.sign({user}, KEY, {expiresIn: '2h'}, (err, token) => {
-                res.json(token)
-             })
+             accessToken=jwt.sign({user}, KeyAccess, {expiresIn: '2hr'})
+            //const refreshToken= jwt.sign({user}, Keyrefresh, {expiresIn: '1d' })
+             userModel.findOneAndUpdate({email:enteredData.email},{refresh_token:accessToken}, function (err, docs) {
+                if (err){
+                    console.log(err)
+                }
+                else{
+                    console.log("Updated Docs : ", docs);
+                }});
+            //  res.cookie('refreshToken',refreshToken,{
+            //      httpOnly:true,
+            //      maxAge: 24 * 60 * 60 * 1000
+            //  });
+             res.json({accessToken})
         }
-    })}
+    })
+    return accessToken;
+}
+
 }
 module.exports= new Signin;

@@ -164,11 +164,7 @@ class HeaderTwo extends Component {
                                                     <ul>
                                                         <li className="account-el">
                                                             <i className="bx bx-user-pin" />
-<<<<<<< Updated upstream
-                                                            <Link to={`form`} >Sign in</Link>
-=======
                                                             <Link to={`#`} >Sign in</Link>
->>>>>>> Stashed changes
                                                         </li>
                                                         <li className="account-el">
                                                             <i className="bx bxs-user-account" />

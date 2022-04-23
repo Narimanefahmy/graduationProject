@@ -10,6 +10,7 @@ var mongoose = require("mongoose");
             email: {type: String, required: true, unique: true},
             password: {type: String, required: true},
             username: {type: String, required: true},
+            refresh_token: {type : String},
           }, baseOptions,
         ),
       );
