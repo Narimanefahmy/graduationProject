@@ -39,8 +39,13 @@ import typeOfUser                       from "./components/pages/registeration/T
 import tourist                          from "./components/pages/registeration/Tourist";
 import tourGuide                        from "./components/pages/registeration/TourGuide";
 import admin                            from "./components/pages/registeration/Admin";
+<<<<<<< Updated upstream
 import form                            from "./components/pages/registeration/MyForm";
 >>>>>>> 94e2cd9971e55663f0cedfce155391730e79a561
+=======
+import SearchResults                    from "./components/pages/search/SearchResults";
+
+>>>>>>> Stashed changes
 //Initializations All Css
 import './index.css';
 import './index.scss';
@@ -63,6 +68,7 @@ class Root extends React.Component{
                         <Route exact path='/' component={defaultLayout} />
                         <Route path={`${process.env.PUBLIC_URL}/home-page-2`} component={secondLayout} />
                         <Layout>
+                            <Route path={`${process.env.PUBLIC_URL}/hotel/:city/:name`} component={packageDetails} />   
                             <Route path={`${process.env.PUBLIC_URL}/about-us`} component={aboutUs} />
                             <Route path={`${process.env.PUBLIC_URL}/destination`} component={destinations} />
                             <Route path={`${process.env.PUBLIC_URL}/package`} component={packages} />

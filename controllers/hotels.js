@@ -1,6 +1,7 @@
 const hotelModel = require('../database_seeds/models/hotels');
 
 var mostPopular = []
+var hotelData = {}
 
 class hotel {
     async getMostPopular() {
@@ -38,6 +39,23 @@ class hotel {
         return mostPopular
     }
 
+    async getBody(req,res,next){
+        console.log('Got body:', req.body);
+        const name  = req.body.name
+        const city = req.body.city
+        try{
+            hotelData = await hotelModel.find({ $and: [ { name: name }, { city: city } ]}).lean()
+            //console.log(hotelData)
+            return hotelData
+        }
+        catch{
+            return 'error ocurred'
+        }
+    }
+    async returnedValue(){
+        var array = await hotelData
+        return array
+    }
 }
 
 module.exports = new hotel

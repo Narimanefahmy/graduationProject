@@ -19,6 +19,7 @@ var placesArray=[]
 var restaurantsArray=[]
 >>>>>>> 967eb79355044d10ec043b68d0925a30007c211e
 class Search{
+<<<<<<< Updated upstream
    search = async(req, res, next) => {
     try {
       const search_field  = req.body.name;
@@ -54,6 +55,47 @@ class Search{
           restaurantsArray = [...restaurantsArray.map(({name,type})=> {
              return {name,type}})];
  
+=======
+  
+  parseArray(array) {
+
+    array = [...array.map((obj) => {
+      obj.images = JSON.parse(obj.images.replace(/'/g, `"`))
+        return obj;
+    })];
+
+}
+
+   search = async(req, res, next) => {
+    try {
+      const search_field  = req.body.search;
+     
+        HotelsArray = await hotelsModel.find({name :{$regex: search_field, $options: "i"}} ,"city name images ").exec()
+         HotelsArray = [...HotelsArray.map(({name,images,city})=> {
+            return {name,images,city};
+
+          })];  
+          this.parseArray(HotelsArray)
+          
+        attractionsArray = await attractionsModel.find({name :{$regex: search_field, $options: "i"}} ,"city name images").exec();
+         attractionsArray = [...attractionsArray.map(({name,images,city})=> {
+            return {name,images,city};
+
+          })];  
+          this.parseArray(attractionsArray) 
+
+          placesArray=await placesModel.find({name :{$regex: search_field, $options: "i"}} ," name type images").exec();
+          placesArray = [...placesArray.map(({name,images,type})=> {
+             return {name,images,type};
+ 
+           })]; 
+          this.parseArray(placesArray) 
+
+           restaurantsArray=await restaurantsModel.find({city :{$regex: search_field, $options: "i"}} ," name city images").exec();
+           restaurantsArray = [...restaurantsArray.map(({name,images,city})=> {
+              return {name,images,city}})];
+          this.parseArray(restaurantsArray) 
+>>>>>>> Stashed changes
           res.json({
             attraction :attractionsArray,
              hotels: HotelsArray,

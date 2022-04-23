@@ -55,9 +55,17 @@ scrollTop()
         top: 0,
         behavior: "smooth"
     });
+<<<<<<< Updated upstream
     }
    
 
+=======
+    } 
+    render() {
+       
+
+        
+>>>>>>> Stashed changes
 
     render() {
     

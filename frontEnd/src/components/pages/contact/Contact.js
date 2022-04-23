@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import {Link} from "react-router-dom";
+
 class AboutUs extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+      
+        };
+    }
+    
     componentDidMount(){
         this.scrollTop();
     }
@@ -12,6 +20,7 @@ class AboutUs extends Component {
             behavior: "smooth"
         });
     }
+
   render() {
     return (
         <>
