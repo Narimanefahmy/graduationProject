@@ -7,9 +7,9 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "jquery": "^3.6.0",
-    "react": "^17.0.2",
+    "react": "^17.0.0",
     "react-datepicker": "^4.2.1",
-    "react-dom": "^17.0.2",
+    "react-dom": "^17.0.1",
     "react-jqueryui-datepicker": "^1.0.3",
     "react-js-pagination": "^3.0.3",
     "react-modal-video": "^1.2.8",
@@ -52,5 +52,8 @@
     "css-loader": "^6.2.0",
     "sass": "^1.38.0",
     "style-loader": "^3.2.1"
+  },
+  "resolutions": {
+    "react-error-overlay": "6.0.9"
   }
 }

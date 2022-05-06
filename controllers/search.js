@@ -3,6 +3,7 @@ const hotelsModel = require("../database_seeds/models/hotels");
 const placesModel = require("../database_seeds/models/places");
 const restaurantsModel = require("../database_seeds/models/restaurant");
 const attractionsModel = require("../database_seeds/models/attraction");
+const {parseArray}= require("./parseArray")
 
 const url = require("../env_variables/env_vars.json").mongoosePort;
 
@@ -11,62 +12,54 @@ mongoose.connect(url)
 
 var HotelsArray = []
 var attractionsArray = []
-var placesArray=[]
-var restaurantsArray=[]
-class Search{
-  
-  parseArray(array) {
-
-    array = [...array.map((obj) => {
-      obj.images = JSON.parse(obj.images.replace(/'/g, `"`))
-        return obj;
-    })];
-
-}
-
-   search = async(req, res, next) => {
+var placesArray = []
+var restaurantsArray = []
+class Search {
+  search = async (req, res, next) => {
     try {
-      const search_field  = req.body.search;
-     
-        HotelsArray = await hotelsModel.find({name :{$regex: search_field, $options: "i"}} ,"city name images ").exec()
-         HotelsArray = [...HotelsArray.map(({name,images,city})=> {
-            return {name,images,city};
+      const search_field = req.body.search;
 
-          })];  
-          this.parseArray(HotelsArray)
-          
-        attractionsArray = await attractionsModel.find({name :{$regex: search_field, $options: "i"}} ,"city name images").exec();
-         attractionsArray = [...attractionsArray.map(({name,images,city})=> {
-            return {name,images,city};
+      HotelsArray = await hotelsModel.find({ name: { $regex: search_field, $options: "i" } }, "city name images").limit(3).exec();
+      HotelsArray = [...HotelsArray.map(({ name, city, images }) => {
+        return { name, city, images };
+      })];
+      parseArray(HotelsArray)
+      console.log(HotelsArray)
 
-          })];  
-          this.parseArray(attractionsArray) 
 
-          placesArray=await placesModel.find({name :{$regex: search_field, $options: "i"}} ," name type images").exec();
-          placesArray = [...placesArray.map(({name,images,type})=> {
-             return {name,images,type};
- 
-           })]; 
-          this.parseArray(placesArray) 
+      attractionsArray = await attractionsModel.find({ name: { $regex: search_field, $options: "i" } }, "city name images").limit(3).exec();
+      attractionsArray = [...attractionsArray.map(({ name, city, images }) => {
+        return { name, city, images };
+      })];
+      parseArray(attractionsArray)
+      console.log(attractionsArray)
 
-           restaurantsArray=await restaurantsModel.find({city :{$regex: search_field, $options: "i"}} ," name city images").exec();
-           restaurantsArray = [...restaurantsArray.map(({name,images,city})=> {
-              return {name,images,city}})];
-          this.parseArray(restaurantsArray) 
-          res.json({
-            attraction :attractionsArray,
-            hotels: HotelsArray,
-            places:placesArray,
-            restaurant : restaurantsArray
-        });
-        next()
+      placesArray = await placesModel.find({ name: { $regex: search_field, $options: "i" } }, " name type images").limit(3).exec();
+      placesArray = [...placesArray.map(({ name, type, images }) => {
+        return { name, type, images };
+      })];
+      parseArray(placesArray)
+
+      restaurantsArray = await restaurantsModel.find({ name: { $regex: search_field, $options: "i" } }, " name city images").limit(3).exec();
+      restaurantsArray = [...restaurantsArray.map(({ name, city, images }) => {
+        return { name, city, images }
+      })];
+      parseArray(restaurantsArray)
+
+      res.json({
+        attraction: attractionsArray,
+        hotels: HotelsArray,
+        places: placesArray,
+        restaurant: restaurantsArray
+      });
+      next()
     } catch {
-        next()
-        return 'error ocurred'
+      next()
+      return 'error ocurred'
     }
-    
-    return placesArray,HotelsArray,attractionsArray,restaurantsArray;
 
+    return placesArray, HotelsArray, attractionsArray, restaurantsArray;
+
+  }
 }
-}
-   module.exports = new Search;
+module.exports = new Search;

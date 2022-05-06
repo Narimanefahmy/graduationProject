@@ -52,6 +52,25 @@ class hotel {
             return 'error ocurred'
         }
     }
+    async getReview(req,res,next){
+        console.log('Got body:', req.body);
+        const name  = req.body.name
+        const city = req.body.city
+        const review = req.body.review
+        try{
+            console.log(typeof review)
+            var reviewHotel= JSON.stringify(review).replace(/"/g, `'`).replace(/,/g,`, `).replace(/:/g,`: `)
+            console.log(reviewHotel)
+            hotelData = await hotelModel.find({ $and: [ { name: name }, { city: city } ]}).lean()
+            var editedReviewText = (hotelData[0].hotelreviews).slice(0, -1)
+            var editedReview = editedReviewText + ", " + reviewHotel + "]"
+            console.log(editedReview)
+            hotelData = await hotelModel.updateOne({ $and: [ { name: name }, { city: city } ]},{$set: {"hotelreviews": editedReview}}).lean()
+        }
+        catch{
+            return 'error ocurred'
+        }
+    }
     async returnedValue(){
         var array = await hotelData
         return array

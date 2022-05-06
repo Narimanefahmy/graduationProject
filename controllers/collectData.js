@@ -3,32 +3,12 @@ const restaurant = require("./restaurants")
 const hotel = require("./hotels")
 const attraction = require('./attractions');
 const hotels = require("./hotels");
+const allSearchRes=require("./allSearchRes");
 const { json } = require("express/lib/response");
 
-function parseArray(array) {
+const {parseArray,modifyStarnum,modifycuisines}= require("./parseArray")
 
-    array = [...array.map((obj) => {
-        obj.images = JSON.parse(obj.images.replace(/'/g, `"`))
-        return obj;
-    })];
 
-}
-
-function modifyStarnum(array){
-    array = [...array.map((obj) => {
-        obj.starnum = parseFloat(obj.starnum)
-        return obj;
-    })];
-}
-
-function modifycuisines(array){
-    array = [...array.map((obj) => {
-        if(obj.cuisines == "None"){
-            obj.cuisines = ""
-        }
-        return obj;
-    })];
-}
 
 async function collectData(req, res, next) {
     console.log("start")
@@ -64,71 +44,75 @@ function parseHotel(array) {
                     obj.images = [...new Set(obj.images)];
                 }
             }
-            console.log("1")
+           //console.log("1")
             if(obj.Propertyamenities != "None"){
                 obj.Propertyamenities = obj.Propertyamenities.replace(/'s/g, ` `)
                 obj.Propertyamenities = obj.Propertyamenities.replace(/s' /g, `s`)
             obj.Propertyamenities = JSON.parse(obj.Propertyamenities.replace(/'/g, `"`))
             }
-            console.log("2")
+            //console.log("2")
             if(obj.roomfeatures != "None"){
                 obj.roomfeatures = obj.roomfeatures.replace(/'s/g, ` `)
                 obj.roomfeatures = obj.roomfeatures.replace(/s' /g, `s`)
                 obj.roomfeatures = JSON.parse(obj.roomfeatures.replace(/'/g, `"`))
             }
-            console.log("3")
+            //console.log("3")
             if(obj.roomtypes != "None"){
                 obj.roomtypes = obj.roomtypes.replace(/'s/g, ` `)
                 obj.roomtypes = obj.roomtypes.replace(/s' /g, `s`)
                 obj.roomtypes = JSON.parse(obj.roomtypes.replace(/'/g, `"`))
             }
-            console.log("4")
+            //console.log("4")
             if(obj.hotelstyle != "None"){
                 obj.hotelstyle = obj.hotelstyle.replace(/'s/g, ` `)
                 obj.hotelstyle = obj.hotelstyle.replace(/s' /g, `s`)
                 obj.hotelstyle = JSON.parse(obj.hotelstyle.replace(/'/g, `"`))
             } 
-            console.log("5")
+            //console.log("5")
             if(obj.starnum != "None"){
                 obj.starnum = parseFloat(obj.starnum)
             }
-            console.log("6")
+            //console.log("6")
             if(obj.hotelreviews != "None"){
                 var found = [],          // an array to collect the strings that are found
                 rxp = /{([^}]+)}/g,
                 str = obj.hotelreviews,
                 curMatch;
+                console.log(str)
                 console.log("7")
                 while( curMatch = rxp.exec( str ) ) {
                     // get profilename
                     var firstvariable = "'profilename': '";
                     var secondvariable = "', 'date':"
                     var profile_name = curMatch[1].match(new RegExp(firstvariable + "(.*)" + secondvariable));
+                    //console.log(profile_name)
                     console.log("8")
                     // get date 'date': '
                     firstvariable = "'date': ' ";
                     secondvariable = "', 'rate':"
                     var date = curMatch[1].match(new RegExp(firstvariable + "(.*)" + secondvariable));
+                    console.log(date)
                     console.log("9")
                     // get rate  'rate': '
                     firstvariable = "'rate': '";
                     secondvariable = "', 'title':"
                     var rate = curMatch[1].match(new RegExp(firstvariable + "(.*)" + secondvariable));
+                    console.log(rate)
                     console.log("10")
                     // get title 'title': '
                     firstvariable = "'title': '";
                     secondvariable = "', 'review':"
                     var title = curMatch[1].match(new RegExp(firstvariable + "(.*)" + secondvariable));
-                    console.log(title);
-                    console.log("11")
+                    //console.log(title);
+                    //console.log("11")
                     if(title == null){
                         firstvariable = "'title': "+'"';
                         secondvariable = '"'+", 'review':"
                         title = curMatch[1].match(new RegExp(firstvariable + "(.*)" + secondvariable));
-                        console.log(title);
-                        console.log("12")
+                        //console.log(title);
+                        //console.log("12")
                     }
-                    console.log("13")
+                    //console.log("13")
                     // get review 
                     firstvariable = "'review': '";
                     secondvariable = "', 'dateofsaty':";
@@ -152,8 +136,8 @@ function parseHotel(array) {
                     }
                     found.push( reviews );
                 }
-                console.log(found);
-                console.log(found.length);
+                //console.log(found);
+                //console.log(found.length);
                 obj.hotelreviews = found
             }
             return obj;
@@ -171,6 +155,9 @@ async function hotelData(req,res,next){
     //console.log(hotelPostedData)
     res.json(hotelPostedData)
 }
+
+
+
 
 
 module.exports = { collectData, hotelData }

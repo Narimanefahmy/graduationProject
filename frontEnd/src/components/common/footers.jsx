@@ -3,13 +3,8 @@ import {Link}               from "react-router-dom";
 import $ from "jquery";
 
 //Import Image
-import secondLogo           from "../../assets/images/logo-2.png"
-import paymentCard1Img      from "../../assets/images/payment/payment-card-1.png"
-import paymentCard2Img      from "../../assets/images/payment/payment-card-2.png"
-import paymentCard3Img      from "../../assets/images/payment/payment-card-3.png"
-import paymentCard4Img      from "../../assets/images/payment/payment-card-4.png"
-import paymentCard5Img      from "../../assets/images/payment/payment-card-5.png"
-
+import Logo from "../../assets/images/favicon.png"
+import Logo2 from "../../assets/images/logo-without-photo.png"
 class Footers extends Component {
     //Inherited Parent options.
     constructor(props) {
@@ -132,10 +127,17 @@ class Footers extends Component {
                 })
             });
 
+         
             // Search Bar js
-            var searchOpen = document.querySelectorAll('.searchbar-open i')
-            var searchCard = document.querySelectorAll('.main-searchbar')
+            var searchOpen  =  document.querySelectorAll('.searchbar-open i')
+            var searchCard  =  document.querySelectorAll('.main-searchbar')
             var searchClose = document.querySelectorAll('.searchbar-close i')
+            var searchCard2 = document.querySelectorAll('.main-searchbar2')
+            var searchOpen2 = document.querySelectorAll('.searchbar-open2 i')
+            var searchClose2= document.querySelectorAll('.searchbar-close2 i')
+            var searchCard3 = document.querySelectorAll('.main-searchbar3')
+            var searchOpen3 = document.querySelectorAll('.searchbar-open3 i')
+            var searchClose3 =document.querySelectorAll('.searchbar-close3 i')
 
             searchOpen.forEach((el)=>{
                 el.addEventListener('click',()=>{
@@ -144,9 +146,38 @@ class Footers extends Component {
                     })
                 })
             })
+            searchOpen2.forEach((el)=>{
+                el.addEventListener('click',()=>{
+                    searchCard2.forEach((el)=>{
+                        el.classList.add('activeSearch')
+                    })
+                })
+            })
+            searchOpen3.forEach((el)=>{
+                el.addEventListener('click',()=>{
+                    searchCard3.forEach((el)=>{
+                        el.classList.add('activeSearch')
+                    })
+                })
+            })
             searchClose.forEach((el)=>{
                 el.addEventListener('click',()=>{
                     searchCard.forEach((el)=>{
+                        el.classList.remove('activeSearch')
+                       
+                    })
+                })
+            });
+            searchClose2.forEach((el)=>{
+                el.addEventListener('click',()=>{
+                    searchCard2.forEach((el)=>{
+                        el.classList.remove('activeSearch')
+                    })
+                })
+            });
+            searchClose3.forEach((el)=>{
+                el.addEventListener('click',()=>{
+                    searchCard3.forEach((el)=>{
                         el.classList.remove('activeSearch')
                     })
                 })
@@ -156,8 +187,34 @@ class Footers extends Component {
                 searchCard.forEach((el)=>{
                     if(event.target === el){
                         el.classList.remove('activeSearch')
+                        var generalSearch = document.getElementById("search");
+                        if (generalSearch !== null) {
+                            document.getElementById('search').style.display = "block"
+                        }
+                       
                     }
                 });
+                searchCard2.forEach((el)=>{
+                            if(event.target === el){
+                                el.classList.remove('activeSearch')
+                                var generalSearch = document.getElementById("search");
+                        if (generalSearch !== null) {
+                            document.getElementById('search').style.display = "block"
+                        }
+                                
+                    }
+                });
+                searchCard3.forEach((el)=>{
+                            if(event.target === el){
+                                el.classList.remove('activeSearch')
+                                var generalSearch = document.getElementById("search");
+                        if (generalSearch !== null) {
+                            document.getElementById('search').style.display = "block"
+                        }
+                              
+                    }
+                });
+               
                 if(!event.target.matches('.user-dropdown-icon i')){
                     accountCard.forEach((element)=>{
                         if(element.classList.contains('activeCard')){
@@ -215,6 +272,7 @@ class Footers extends Component {
                 </div>
                 {/* ===============  Newsletter area end =============== */}
 
+               
                 {/* ==============  Footer area start================= */}
                 <div className="footer-area">
                     <div className="container">
@@ -222,27 +280,14 @@ class Footers extends Component {
                             <div className="col-lg-4 col-md-12">
                                 <div className="footer-info">
                                     <div className="footer-logo">
-                                        <img src={secondLogo} alt="" className="img-fluid" />
+                                        <img src={Logo} alt="" className="img-fluid" />
+                                        <img src={Logo2} alt="" className="img-fluid" />
                                     </div>
-                                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquid maxime aut ut voluptate
-                                        dolorum nisi ducimus ratione</p>
-                                    <div className="footer-social-icons">
-                                        <h5>Follow Us:</h5>
-                                        <ul>
-                                            <li>
-                                                <Link to={"#"}><i className="bx bxl-facebook" /></Link>
-                                            </li>
-                                            <li>
-                                                <Link to={"#"}><i className="bx bxl-instagram" /></Link>
-                                            </li>
-                                            <li>
-                                                <Link to={"#"}><i className="bx bxl-twitter" /></Link>
-                                            </li>
-                                            <li>
-                                                <Link to={"#"}><i className="bx bxl-dribbble" /></Link>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    <p>we provide you with a whole trip starting from booking flights,moving
+                                        to booking restaurants,places,cars and Ending with
+                                        booking your room in an adorable hotel.<br></br><b>we are happy to be one of our
+                                    customers</b></p>
+                                   
                                 </div>
                             </div>
                             <div className="col-lg-8 col-md-12">
@@ -287,9 +332,7 @@ class Footers extends Component {
                                                     <li>
                                                         <Link to={`${process.env.PUBLIC_URL}/destination`} onClick={this.scrollTop} >Destinations</Link>
                                                     </li>
-                                                    <li>
-                                                        <Link to={`${process.env.PUBLIC_URL}/blog`} onClick={this.scrollTop}>our Blogs</Link>
-                                                    </li>
+                                                   
                                                     <li>
                                                         <Link to={`${process.env.PUBLIC_URL}/package`} className="sub-item" onClick={this.scrollTop}>Package</Link>
                                                     </li>
@@ -298,24 +341,34 @@ class Footers extends Component {
                                         </div>
                                     </div>
                                     <div className="col-lg-4 col-md-4">
-                                        <div className="footer-links payment-links">
-                                            <h5 className="widget-title">We Accepts:</h5>
-                                            <div className="payment-cards">
-                                                <img src={paymentCard2Img} alt="" className="img-fluid" />
-                                                <img src={paymentCard1Img} alt="" className="img-fluid" />
-                                                <img src={paymentCard3Img} alt="" className="img-fluid" />
-                                                <img src={paymentCard4Img} alt="" className="img-fluid" />
-                                                <img src={paymentCard5Img} alt="" className="img-fluid" />
+                                    <div className="footer-links ">
+                                            <h5 className="widget-title">Follow Us:</h5>
+                                            <div class="footer-social-icons">
+                                        <ul>
+                                            <li>
+                                                <Link to={"#"}><i className="bx bxl-facebook" /></Link>
+                                            </li>
+                                            <li>
+                                                <Link to={"#"}><i className="bx bxl-instagram" /></Link>
+                                            </li>
+                                            <li>
+                                                <Link to={"#"}><i className="bx bxl-twitter" /></Link>
+                                            </li>
+                                            <li>
+                                                <Link to={"#"}><i className="bx bxl-dribbble" /></Link>
+                                            </li>
+                                                </ul>
                                             </div>
-                                        </div>
                                     </div>
+                                        </div>
+                                       
                                 </div>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-lg-12">
                                 <div className="copyrigth-area">
-                                    <p>Copyright 2021 <Link to={`#`}>TourX</Link> | Design By <Link to={`#`}>Egens Lab</Link></p>
+                                    <p>Copyright 2022 <Link to={`#`}>EgyBook</Link></p>
                                 </div>
                             </div>
                         </div>

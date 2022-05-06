@@ -1844,14 +1844,15 @@ header > .header-area .nav-right {
 }
 
 .package-card-xl .package-thumb-xl img {
-  width: 300px;
-  height: 100%;
+  width: 300px !important;
+  height: 260px !important;
   -o-object-fit: cover;
      object-fit: cover;
-  border-radius: 10px;
+  border-radius: 10px
 }
 
 .package-card-xl .package-details-xl {
+  height: 260px !important;
   width: 60%;
   padding: 25px 30px;
 }
@@ -2064,7 +2065,7 @@ header > .header-area .nav-right {
 
 .offer-card .offer-details {
   border: 1px solid #f1f1f1;
-  padding: 20px 15px;
+  padding: 25px 15px;
 }
 
 .offer-card .offer-details .offer-info {
@@ -2258,6 +2259,7 @@ header > .header-area .nav-right {
 }
 
 .achievement-card {
+  height: 211px;
   padding: 20px;
   text-align: center;
   background: #304F47;
@@ -5728,4 +5730,82 @@ font-family:cursive;
   font-weight: 600;
   margin-left: 5px;
 }
+.review-span{
+  color: #D80909  ;
+  font-size: 19px;
+  margin-left: 20px;
+  font-weight: bold;
+}
+/** card all search result **/
+.sidebar-categorie-edit{
+  margin-top: 85px !important;
+}
 
+.durations-option-edit label{
+  margin-left: 10px !important;
+}
+.search-card-title{
+  font-size: 22px !important;
+
+}
+.search-card-h5{
+  width: 374px !important;
+}
+
+.package-info-edit h3{
+  padding-bottom: 0 !important;
+}
+h3 i{
+  margin-right: 5px;
+}
+.h3-address{
+  line-height: 1.2 !important;
+  color: #737679 !important;
+}
+.package-details-xl-edit{
+  width: 67%;
+  position: relative;
+}
+.package-info-price{
+  position: absolute;
+  bottom: 30px;
+  right: 0px;
+  
+}
+.package-info-price span{
+  font-size: 20px !important;
+}
+.place-type{
+  position: absolute;
+  top: 15px;
+  right: 0px;
+}
+
+.address-div{
+  width: 400px !important;
+}
+.package-rating-edit{
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+}
+.package-rating-edit span{
+  font-size: 16px;
+}
+.rev-element{
+  margin-right: 22px;
+}
+.attraction-type-div{
+  margin-top: 15px;
+}
+.restaurant-type-div{
+  margin-top: 15px;
+}
+.package-rating-edit-attraction,.package-rating-edit-restaurant{
+  position: absolute;
+  bottom: 25px;
+  left: 30px;
+}
+
+.package-rating-edit-attraction span,.package-rating-edit-restaurant span{
+  font-size: 16px}
