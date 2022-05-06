@@ -21,20 +21,22 @@ signin = (req, res) => {
                 res.json("notFound!")
         } else {
             var user = docs[0];
-             accessToken=jwt.sign({user}, KeyAccess, {expiresIn: '2hr'})
+             accessToken=jwt.sign({ id: user.id }, KeyAccess, {expiresIn: 86400})
             //const refreshToken= jwt.sign({user}, Keyrefresh, {expiresIn: '1d' })
              userModel.findOneAndUpdate({email:enteredData.email},{refresh_token:accessToken}, function (err, docs) {
                 if (err){
                     console.log(err)
                 }
                 else{
-                    console.log("Updated Docs : ", docs);
+                    console.log("Updated Docs : ");
+                    
                 }});
             //  res.cookie('refreshToken',refreshToken,{
             //      httpOnly:true,
             //      maxAge: 24 * 60 * 60 * 1000
             //  });
-             res.json({accessToken})
+             res.json(accessToken)
+             console.log(accessToken)
         }
     })
     return accessToken;

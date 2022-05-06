@@ -5,9 +5,9 @@ class verifytoken{
     verifyToken = (req, res, next) => {
         const authHeader = req.headers['authorization'];
         const token = authHeader && authHeader.split(' ')[1];
-        if(token == null) return res.sendStatus(401);
+        if(token == null) return res.json("Signin");
         jwt.verify(token, KeyAccess, (err, decoded) => {
-            if(err) return res.sendStatus(403);
+            if(err) return res.json("Forbidden");
             req.email = decoded.email;
             next();
         })

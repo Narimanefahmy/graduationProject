@@ -37,7 +37,6 @@ import SearchResults from "./components/pages/search/SearchResults";
 import AboutCity from "./components/pages/aboutcity/AboutCity";
 import FindForm from "./components/pages/home/FindForm";
 import Plan from "./components/pages/home/Plan";
-// import Reservation from "./components/pages/reservation/Reservation";
 
 //Initializations All Css
 import './index.css';
@@ -83,12 +82,9 @@ class Root extends React.Component {
                         <Route path={`${process.env.PUBLIC_URL}/tourGuide`} component={tourGuide} />
                         <Route path={`${process.env.PUBLIC_URL}/admin`} component={admin} />
                         <Route path={`${process.env.PUBLIC_URL}/search/:string`} component={SearchResults} />
-                        <Route path={`${process.env.PUBLIC_URL}/AboutCity`} component={AboutCity} />
+                        <Route path={`${process.env.PUBLIC_URL}/AboutCity/:string`} component={AboutCity} />
                         <Route path={`${process.env.PUBLIC_URL}/FindForm`} component={FindForm} />
                         <Route path={`${process.env.PUBLIC_URL}/Plan`} component={Plan} />
-                        <Route path={`${process.env.PUBLIC_URL}/Plan`} component={Plan} />
-                        {/* <Route path={`${process.env.PUBLIC_URL}/Reservation`} component={Reservation} /> */}
-                       
                     </Layout>
                 </Switch>
             </BrowserRouter>

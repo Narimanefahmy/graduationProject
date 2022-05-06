@@ -125,10 +125,3 @@ class TourGuide extends React.Component {
 
  
 export default TourGuide;
-
-
-    
-    
-  
-
-   

@@ -13,7 +13,7 @@ import { useHistory } from 'react-router-dom';
         this.state = {
            email: null,
            password: null,
-           userName:null,
+           username:null,
            admin_name:null,
            type:"Admin"
            //msg:null,
@@ -38,8 +38,8 @@ import { useHistory } from 'react-router-dom';
             body: JSON.stringify({
                email: this.state.email,
                password: this.state.password,
-               username:this.state.userName,
-               adminName:this.state.adminName,
+               username:this.state.username,
+               admin_name:this.state.admin_name,
                type:this.state.type
             }),
             headers: {
@@ -52,8 +52,8 @@ import { useHistory } from 'react-router-dom';
         // })
         console.table(this.state.email);
         console.table(this.state.password);
-        console.table(this.state.userName);
-        console.table(this.state.adminName);
+        console.table(this.state.username);
+        console.table(this.state.admin_name);
     
       }
     
@@ -117,13 +117,3 @@ import { useHistory } from 'react-router-dom';
 
  
 export default Admin;
-
-
-
- 
-
-
-        
-
-
-
